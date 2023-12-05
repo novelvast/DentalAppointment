@@ -49,6 +49,12 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--通用模块-->
+            <dependency>
+                <groupId>com.microservice</groupId>
+                <artifactId>common</artifactId>
+                <version>${common.version}</version>
+            </dependency>
             <!--Spring Cloud Alibaba 相关依赖-->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
@@ -56,12 +62,6 @@
                 <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <!--通用模块-->
-            <dependency>
-                <groupId>com.microservice</groupId>
-                <artifactId>common</artifactId>
-                <version>${common.version}</version>
             </dependency>
 
         </dependencies>

@@ -1,0 +1,13 @@
+server:
+  port: 8301
+spring:
+  application:
+    name: approval-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.115.205.56:8848
+        username: nacos
+        password: microservice
+
+

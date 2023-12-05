@@ -6,14 +6,20 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="hospital-manage-service" />
+        <module name="approval-service" />
         <module name="common" />
         <module name="personal-info-service" />
+        <module name="appointment-service" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="appointment-service" options="-parameters" />
+      <module name="approval-service" options="-parameters" />
       <module name="common" options="-parameters" />
+      <module name="hospital-manage-service" options="-parameters" />
       <module name="personal-info-service" options="-parameters" />
     </option>
   </component>

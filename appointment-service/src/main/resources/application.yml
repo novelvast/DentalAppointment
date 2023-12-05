@@ -1,0 +1,13 @@
+server:
+  port: 8201
+spring:
+  application:
+    name: appointment-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.115.205.56:8848
+        username: nacos
+        password: microservice
+
+

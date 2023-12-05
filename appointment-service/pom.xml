@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <artifactId>personal-info-service</artifactId>
+    <artifactId>appointment-service</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>personal-info-service</name>
-    <description>personal-info-service</description>
+    <name>appointment-service</name>
+    <description>appointment-service</description>
 
     <dependencies>
         <dependency>
