@@ -1,0 +1,16 @@
+server:
+  port: 8101
+spring:
+  application:
+    name: personal-info-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.115.205.56:8848
+        username: nacos
+        password: microservice
+      config:
+        server-addr: 47.115.205.56:8848
+        username: nacos
+        password: microservice
+        file-extension: yaml
