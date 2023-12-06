@@ -28,6 +28,7 @@
 
         <!--   各依赖版本配置     -->
         <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
+        <spring-cloud.version>2021.0.3</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.9.RELEASE</spring-cloud-alibaba.version>
         <mybatis-plus.version>3.2.0</mybatis-plus.version>
         <hutool.version>5.8.0</hutool.version>
@@ -51,23 +52,7 @@
             <artifactId>common</artifactId>
         </dependency>
 
-        <!--mysql数据库-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
 
-        <!--MyBatis-plus-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-
-        <!--mp代码生成器-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
-        </dependency>
 
         <!--freemarker-->
         <dependency>
@@ -127,6 +112,14 @@
                 <groupId>com.microservice</groupId>
                 <artifactId>common</artifactId>
                 <version>${common.version}</version>
+            </dependency>
+            <!--Spring Cloud 相关依赖-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <!--Spring Cloud Alibaba 相关依赖-->
             <dependency>

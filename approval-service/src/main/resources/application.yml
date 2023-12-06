@@ -10,4 +10,3 @@ spring:
         username: nacos
         password: microservice
 
-

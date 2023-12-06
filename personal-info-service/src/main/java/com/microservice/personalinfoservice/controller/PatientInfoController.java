@@ -32,7 +32,7 @@ public class PatientInfoController {
                               @RequestParam String idNumber,
                               @RequestParam String name,
                               @RequestParam String gender,
-                                 @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                  @DateTimeFormat(pattern = "yyyy-MM-dd")
                               @RequestParam LocalDate birthday){
 
         Boolean result = patientInfoService.register(username, password, phone, email, idNumber, name, gender, birthday);
