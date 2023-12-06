@@ -10,14 +10,22 @@ import com.microservice.personalinfoservice.service.PatientInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class PatientInfoServiceImpl implements PatientInfoService {
 
     @Autowired
     private PatientInfoMapper patientInfoMapper;
     @Override
-    public void register(String username, String password, String phone, String email, String IDNumber, String name, String gender, String birthday) {
-
+    public Boolean register(String username, String password, String phone, String email, String idNumber, String name, String gender, LocalDate birthday) {
+        int result = patientInfoMapper.insert(new PatientInfo(username, password, phone, email, idNumber, name, gender, birthday));
+        if(result == 1){
+            return Boolean.TRUE;
+        }
+        else {
+            return Boolean.FALSE;
+        }
     }
 
     @Override
@@ -37,13 +45,12 @@ public class PatientInfoServiceImpl implements PatientInfoService {
             BeanUtil.copyProperties(patientInfo, patientDto);
             return patientDto;
         }
-        System.out.println("null");
         return null;
     }
 
     @Override
-    public void updateInfo(String username, String phone, String email, String IDNumber, String name, String gender, String birthday) {
-
+    public Boolean updateInfo(String username, String phone, String email, String IDNumber, String name, String gender, String birthday) {
+        return Boolean.FALSE;
     }
 
     @Override

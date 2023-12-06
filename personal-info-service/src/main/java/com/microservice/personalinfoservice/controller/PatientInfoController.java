@@ -3,11 +3,18 @@ package com.microservice.personalinfoservice.controller;
 import com.microservice.common.api.CommonResult;
 import com.microservice.personalinfoservice.dto.PatientDto;
 import com.microservice.personalinfoservice.service.PatientInfoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
+import java.time.LocalDate;
 
+/**
+ * 患者信息管理Controller
+ */
+@Api(tags = "PatientInfoController", description = "患者信息管理")
 @RestController
 @RequestMapping("/api/patient")
 public class PatientInfoController {
@@ -16,19 +23,25 @@ public class PatientInfoController {
     private PatientInfoService patientInfoService;
 
 
-    // 患者注册
+    @ApiOperation("患者注册")
     @PostMapping("/register")
     public CommonResult register(@RequestParam String username,
                               @RequestParam String password,
                               @RequestParam String phone,
                               @RequestParam String email,
-                              @RequestParam String IDNumber,
+                              @RequestParam String idNumber,
                               @RequestParam String name,
                               @RequestParam String gender,
-                              @RequestParam String birthday){
+                                 @DateTimeFormat(pattern = "yyyy-MM-dd")
+                              @RequestParam LocalDate birthday){
 
-        patientInfoService.register(username, password, phone, email, IDNumber, name, gender, birthday);
-        return CommonResult.success(null,"注册成功");
+        Boolean result = patientInfoService.register(username, password, phone, email, idNumber, name, gender, birthday);
+        if(result == Boolean.TRUE) {
+            return CommonResult.success(null,"注册成功");
+        }
+        else {
+            return CommonResult.failed("注册失败");
+        }
     }
 
     // 患者登陆
@@ -40,10 +53,14 @@ public class PatientInfoController {
     }
 
     // 根据患者名获取患者信息
+    @ApiOperation("根据患者名获取患者信息")
     @GetMapping("/{patientName}")
-    public PatientDto getPatientByName(@PathVariable String patientName){
-
-        return patientInfoService.getPatientByName(patientName);
+    public CommonResult getPatientByName(@PathVariable String patientName){
+        PatientDto patientDto = patientInfoService.getPatientByName(patientName);
+        if(patientDto == null) {
+            return CommonResult.failed("查无此人");
+        }
+        return CommonResult.success(patientDto);
     }
 
     // 修改患者信息

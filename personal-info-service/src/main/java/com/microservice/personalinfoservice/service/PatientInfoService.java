@@ -3,12 +3,14 @@ package com.microservice.personalinfoservice.service;
 import com.microservice.common.api.CommonResult;
 import com.microservice.personalinfoservice.dto.PatientDto;
 
+import java.time.LocalDate;
+
 public interface PatientInfoService {
 
     /**
      * 患者注册
      */
-    void register(String username, String password, String phone, String email, String IDNumber, String name, String gender, String birthday);
+    Boolean register(String username, String password, String phone, String email, String idNumber, String name, String gender, LocalDate birthday);
 
     /**
      * 患者登陆
@@ -23,7 +25,7 @@ public interface PatientInfoService {
     /**
      * 修改患者信息
      */
-    void updateInfo(String username, String phone, String email, String IDNumber, String name, String gender, String birthday);
+    Boolean updateInfo(String username, String phone, String email, String IDNumber, String name, String gender, String birthday);
 
     /**
      * 修改患者密码
