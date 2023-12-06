@@ -57,7 +57,7 @@ nacos后台地址：http://47.115.205.56:8848/nacos
 - [x] 整合nacos-discovery
 - [x] 整合mybatis-plus
 - [x] 整合nacos-config
-- [ ] 整合swagger
+- [x] 整合swagger
 - [ ] mybatis-generator共用
 - [ ] 整合sentinel
 - [ ] 整合gateway+鉴权
