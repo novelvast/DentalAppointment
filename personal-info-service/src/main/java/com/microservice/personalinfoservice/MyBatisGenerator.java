@@ -43,6 +43,10 @@ public class MyBatisGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
+
+        /**
+         * 此处路径需要修改！！！
+         */
         gc.setOutputDir(projectPath + "/personal-info-service" + "/src/main/java");
 //        gc.setOutputDir("D:\\test");
         gc.setAuthor("Zhao");
@@ -52,6 +56,9 @@ public class MyBatisGenerator {
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
+        /**
+         * 此处数据库需要修改！！！
+         */
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setUrl("jdbc:mysql://rm-cn-pe33ibr74001zlgo.rwlb.rds.aliyuncs.com:3306/personal_info?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai");
         // dsc.setSchemaName("public");
@@ -61,6 +68,9 @@ public class MyBatisGenerator {
         mpg.setDataSource(dsc);
 
         // 包配置
+        /**
+         * 此处包名需要修改！！！
+         */
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(null);
         pc.setParent("com.microservice.personalinfoservice");
@@ -85,7 +95,10 @@ public class MyBatisGenerator {
         focList.add(new FileOutConfig(templatePath) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
+                // 自定义输出文件名
+                /**
+                 * 此处路径需要修改！！！
+                 */
                 return projectPath + "/personal-info-service" + "/src/main/resources/mapper/"
                         + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
