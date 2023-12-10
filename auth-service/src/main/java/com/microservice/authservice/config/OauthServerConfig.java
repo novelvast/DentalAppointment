@@ -28,6 +28,7 @@ public class OauthServerConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+
     private String sign_key = "test123";
 
     /**
@@ -90,6 +91,7 @@ public class OauthServerConfig extends AuthorizationServerConfigurerAdapter {
                 .tokenServices(authorizationServerTokenServices()) // token服 务的⼀个描述，可以认为是token⽣成细节的描述，⽐如有效时间多少等
                 .authenticationManager(authenticationManager) // 指定认证管理器，随后注⼊⼀个到当前类使⽤即可
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
+
     }
 
     /*

@@ -60,6 +60,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/**").authenticated() // autodeliver为前缀的请求需要认证
                 .antMatchers("/demo/**").authenticated() // demo为前缀的请求需要认证
+                .antMatchers("/api/**").permitAll() // TODO
                 .anyRequest().permitAll(); // 其他请求不认证
     }
 

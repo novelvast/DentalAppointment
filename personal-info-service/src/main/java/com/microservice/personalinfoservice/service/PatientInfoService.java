@@ -1,6 +1,7 @@
 package com.microservice.personalinfoservice.service;
 
 import com.microservice.common.api.CommonResult;
+import com.microservice.common.domain.UserDto;
 import com.microservice.personalinfoservice.dto.PatientDto;
 import com.microservice.personalinfoservice.entity.PatientInfo;
 
@@ -37,4 +38,7 @@ public interface PatientInfoService {
      * 修改患者密码
      */
     void updatePassword(String username, String password);
+
+    UserDto loadUserByUsername(String username);
+
 }
