@@ -34,11 +34,8 @@ public class PatientInfoServiceImpl implements PatientInfoService {
     }
 
     @Override
-    public PatientDto getPatientByName(String username) {
-        QueryWrapper<PatientInfo> patientInfoQueryWrapper = new QueryWrapper<>();
-        patientInfoQueryWrapper.eq("username", username);
-
-        PatientInfo patientInfo = patientInfoMapper.selectOne(patientInfoQueryWrapper);
+    public PatientDto getByName(String username) {
+        PatientInfo patientInfo = getAllInfoByName(username);
 
         if(patientInfo != null) {
             PatientDto patientDto =new PatientDto();
@@ -46,6 +43,14 @@ public class PatientInfoServiceImpl implements PatientInfoService {
             return patientDto;
         }
         return null;
+    }
+
+    @Override
+    public PatientInfo getAllInfoByName(String username) {
+        QueryWrapper<PatientInfo> patientInfoQueryWrapper = new QueryWrapper<>();
+        patientInfoQueryWrapper.eq("username", username);
+
+        return patientInfoMapper.selectOne(patientInfoQueryWrapper);
     }
 
     @Override

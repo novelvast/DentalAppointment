@@ -56,7 +56,7 @@ public class PatientInfoController {
     @ApiOperation("根据患者名获取患者信息")
     @GetMapping("/{patientName}")
     public CommonResult getPatientByName(@PathVariable String patientName){
-        PatientDto patientDto = patientInfoService.getPatientByName(patientName);
+        PatientDto patientDto = patientInfoService.getByName(patientName);
         if(patientDto == null) {
             return CommonResult.failed("查无此人");
         }

@@ -2,6 +2,7 @@ package com.microservice.personalinfoservice.service;
 
 import com.microservice.common.api.CommonResult;
 import com.microservice.personalinfoservice.dto.PatientDto;
+import com.microservice.personalinfoservice.entity.PatientInfo;
 
 import java.time.LocalDate;
 
@@ -20,7 +21,12 @@ public interface PatientInfoService {
     /**
      * 根据患者名获取患者信息
      */
-    PatientDto getPatientByName(String username);
+    PatientDto getByName(String username);
+
+    /**
+     * 根据患者名获取所有患者信息
+     */
+    PatientInfo getAllInfoByName(String username);
 
     /**
      * 修改患者信息
