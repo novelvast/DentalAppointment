@@ -32,6 +32,10 @@ nacos后台地址：http://47.115.205.56:8848/nacos
 
 
 
+认证微服务：910x
+
+
+
 ### 技术选型
 
 | 技术                 | 说明                  | 版本                     |
@@ -73,11 +77,11 @@ nacos后台地址：http://47.115.205.56:8848/nacos
 - [x] 整合nacos-config实现配置管理
 - [x] 整合swagger实现接口文档生成
 - [x] 整合feign实现远程接口调用
-- [ ] 整合loadbalance实现负载均衡
 - [ ] 整合oauth2+jwt实现鉴权
-- [ ] mybatis-generator共用
+- [ ] 整合gateway实现网关服务
 - [ ] 整合sentinel
-- [ ] 整合gateway
+- [ ] 不要明文密码
+- [ ] mybatis-generator共用
 - [ ] 验证码
 - [ ] 日志
 - [ ] 业务逻辑实现

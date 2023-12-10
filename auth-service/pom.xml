@@ -9,34 +9,28 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <artifactId>personal-info-service</artifactId>
+    <artifactId>auth-service</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>personal-info-service</name>
-    <description>personal-info-service</description>
+    <name>auth-service</name>
+    <description>auth-service</description>
 
     <dependencies>
-        <!--mysql数据库-->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
-        <!--MyBatis-plus-->
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-
-        <!--mp代码生成器-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <!--导⼊spring cloud oauth2依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
+
         </dependency>
 
         <dependency>
@@ -51,9 +45,10 @@
             <artifactId>spring-security-oauth2</artifactId>
             <version>2.3.4.RELEASE</version>
         </dependency>
+
+
+
     </dependencies>
-
-
 
     <build>
         <plugins>
