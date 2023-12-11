@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * 前台会员服务远程调用Service
- * Created by macro on 2020/7/16.
+ * 患者信息服务远程调用Service
+ *
+ * @author zhao
+ * @date 2023/12/10
  */
 @Service
 @FeignClient("personal-info-service")

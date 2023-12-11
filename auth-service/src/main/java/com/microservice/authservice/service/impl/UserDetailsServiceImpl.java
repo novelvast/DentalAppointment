@@ -12,16 +12,13 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
-public class JdbcUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private PatientInfoService patientInfoService;
 
     /**
-     * 根据username查询出该用户的所有信息，封装成UserDetails类型的对象返回，至于密码，框架会自动匹配
-     * @param username
-     * @return
-     * @throws UsernameNotFoundException
+     * 根据username查询出该用户的信息，封装成UserDetails类型的对象返回
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
