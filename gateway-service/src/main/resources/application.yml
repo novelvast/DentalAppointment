@@ -1,0 +1,25 @@
+server:
+  port: 9201
+
+service-url:
+  personal-info-service: http://localhost:8101
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.115.205.56:8848
+        username: nacos
+        password: microservice
+    gateway:
+      routes:
+        - id: patient-info
+          uri: ${service-url.personal-info-service}
+          predicates:
+            - Path=/patient-info/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/api/patient
+

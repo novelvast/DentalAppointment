@@ -8,11 +8,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="hospital-manage-service" />
-        <module name="approval-service" />
         <module name="auth-service" />
         <module name="common" />
         <module name="personal-info-service" />
         <module name="appointment-service" />
+        <module name="gateway-service" />
+        <module name="approval-service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -22,6 +23,7 @@
       <module name="approval-service" options="-parameters" />
       <module name="auth-service" options="-parameters" />
       <module name="common" options="-parameters" />
+      <module name="gateway-service" options="-parameters" />
       <module name="hospital-manage-service" options="-parameters" />
       <module name="personal-info-service" options="-parameters" />
     </option>

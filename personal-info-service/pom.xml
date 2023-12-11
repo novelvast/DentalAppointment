@@ -15,6 +15,11 @@
     <description>personal-info-service</description>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
         <!--mysql数据库-->
         <dependency>
             <groupId>mysql</groupId>
