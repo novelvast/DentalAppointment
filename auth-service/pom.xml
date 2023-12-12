@@ -9,39 +9,28 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <artifactId>personal-info-service</artifactId>
+    <artifactId>auth-service</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>personal-info-service</name>
-    <description>personal-info-service</description>
+    <name>auth-service</name>
+    <description>auth-service</description>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
-        <!--mysql数据库-->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-
-        <!--MyBatis-plus-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-
-        <!--mp代码生成器-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <!--导⼊spring cloud oauth2依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
+
         </dependency>
 
         <dependency>
@@ -56,9 +45,38 @@
             <artifactId>spring-security-oauth2</artifactId>
             <version>2.3.4.RELEASE</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba</groupId>-->
+<!--            <artifactId>druid-spring-boot-starter</artifactId>-->
+<!--            <version>1.1.10</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash;操作数据库需要事务控制&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework</groupId>-->
+<!--            <artifactId>spring-tx</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework</groupId>-->
+<!--            <artifactId>spring-jdbc</artifactId>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; jpa&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+<!--        </dependency>-->
+
+
+
     </dependencies>
-
-
 
     <build>
         <plugins>

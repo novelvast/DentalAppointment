@@ -3,6 +3,7 @@ package com.microservice.personalinfoservice.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.microservice.common.api.CommonResult;
+import com.microservice.common.domain.UserDto;
 import com.microservice.personalinfoservice.dto.PatientDto;
 import com.microservice.personalinfoservice.entity.PatientInfo;
 import com.microservice.personalinfoservice.mapper.PatientInfoMapper;
@@ -34,11 +35,8 @@ public class PatientInfoServiceImpl implements PatientInfoService {
     }
 
     @Override
-    public PatientDto getPatientByName(String username) {
-        QueryWrapper<PatientInfo> patientInfoQueryWrapper = new QueryWrapper<>();
-        patientInfoQueryWrapper.eq("username", username);
-
-        PatientInfo patientInfo = patientInfoMapper.selectOne(patientInfoQueryWrapper);
+    public PatientDto getByName(String username) {
+        PatientInfo patientInfo = getAllInfoByName(username);
 
         if(patientInfo != null) {
             PatientDto patientDto =new PatientDto();
@@ -49,6 +47,14 @@ public class PatientInfoServiceImpl implements PatientInfoService {
     }
 
     @Override
+    public PatientInfo getAllInfoByName(String username) {
+        QueryWrapper<PatientInfo> patientInfoQueryWrapper = new QueryWrapper<>();
+        patientInfoQueryWrapper.eq("username", username);
+
+        return patientInfoMapper.selectOne(patientInfoQueryWrapper);
+    }
+
+    @Override
     public Boolean updateInfo(String username, String phone, String email, String IDNumber, String name, String gender, String birthday) {
         return Boolean.FALSE;
     }
@@ -56,5 +62,17 @@ public class PatientInfoServiceImpl implements PatientInfoService {
     @Override
     public void updatePassword(String username, String password) {
 
+    }
+
+    @Override
+    public UserDto loadUserByUsername(String username) {
+        PatientInfo patientInfo = getAllInfoByName(username);
+
+        if(patientInfo != null) {
+            UserDto userDto = new UserDto();
+            BeanUtil.copyProperties(patientInfo, userDto);
+            return userDto;
+        }
+        return null;
     }
 }

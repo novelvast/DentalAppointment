@@ -1,6 +1,7 @@
 package com.microservice.personalinfoservice.controller;
 
 import com.microservice.common.api.CommonResult;
+import com.microservice.common.domain.UserDto;
 import com.microservice.personalinfoservice.dto.PatientDto;
 import com.microservice.personalinfoservice.service.PatientInfoService;
 import io.swagger.annotations.Api;
@@ -55,8 +56,8 @@ public class PatientInfoController {
     // 根据患者名获取患者信息
     @ApiOperation("根据患者名获取患者信息")
     @GetMapping("/{patientName}")
-    public CommonResult getPatientByName(@PathVariable String patientName){
-        PatientDto patientDto = patientInfoService.getPatientByName(patientName);
+    public CommonResult getByName(@PathVariable String patientName){
+        PatientDto patientDto = patientInfoService.getByName(patientName);
         if(patientDto == null) {
             return CommonResult.failed("查无此人");
         }
@@ -86,5 +87,11 @@ public class PatientInfoController {
 
     }
 
+    // 根据患者名获取患者信息
+    @ApiOperation("根据患者名获取患者信息")
+    @GetMapping("/loadByUsername")
+    public UserDto loadUserByUsername(@RequestParam String username){
+        return patientInfoService.loadUserByUsername(username);
+    }
 
 }

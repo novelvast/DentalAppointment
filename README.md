@@ -1,3 +1,17 @@
+## 提交修改流程
+
+1. 在自己对应微服务的目录下，编写自己的代码。
+2. 添加maven依赖时，在自己微服务的pom中添加，不用写version，统一从父项目中拿，没有时在父项目的dependenyManager中添加，防止版本不一致产生问题
+3. 代码请遵循MVC架构，controller负责调用，service负责业务逻辑，mapper负责操作数据库
+4. 返回结果统一使用CommentResult类封装，该类的定义在common包中。如果需要添加由其他多个微服务共用的功能，也请添加在common包中
+5. mapper、entity使用mybatis-plus生成，参考 personal-info-service/src/main/java/com/microservice/personalinfoservice/MyBatisGenerator.java，将MyBatisGenerator.java复制到自己的包中，需要修改的地方我已注释给出。注意数据库修改后重新生成不会覆盖原文件，需要删除原文件后重新生成
+6. controller添加swagger注解，参考个人信息微服务
+7. 如果需要调用其他服务的方法，请使用feign，参考appointment-service/src/main/java/com/microservice/appointmentservice/service/HospitalManageService，（这个是我写的用法示例，不一定符合实际情况）
+
+
+
+
+
 nacos后台地址：http://47.115.205.56:8848/nacos
 
 用户名：nacos 
@@ -15,6 +29,12 @@ nacos后台地址：http://47.115.205.56:8848/nacos
 审核微服务：830x
 
 医院管理微服务：840x
+
+
+
+认证微服务：910x
+
+网关：9201
 
 
 
@@ -59,11 +79,11 @@ nacos后台地址：http://47.115.205.56:8848/nacos
 - [x] 整合nacos-config实现配置管理
 - [x] 整合swagger实现接口文档生成
 - [x] 整合feign实现远程接口调用
-- [ ] 整合loadbalance实现负载均衡
 - [ ] 整合oauth2+jwt实现鉴权
-- [ ] mybatis-generator共用
+- [ ] 整合gateway实现网关服务
 - [ ] 整合sentinel
-- [ ] 整合gateway
+- [ ] 不要明文密码
+- [ ] mybatis-generator共用
 - [ ] 验证码
 - [ ] 日志
 - [ ] 业务逻辑实现

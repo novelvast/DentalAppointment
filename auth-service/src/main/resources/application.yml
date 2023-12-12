@@ -1,0 +1,11 @@
+server:
+  port: 9101
+spring:
+  application:
+    name: auth-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.115.205.56:8848
+        username: nacos
+        password: microservice
