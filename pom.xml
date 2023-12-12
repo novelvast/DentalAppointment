@@ -28,7 +28,7 @@
 
         <!--   各依赖版本配置     -->
         <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
-        <spring-cloud.version>2021.0.3</spring-cloud.version>
+        <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.9.RELEASE</spring-cloud-alibaba.version>
         <mybatis-plus.version>3.2.0</mybatis-plus.version>
         <hutool.version>5.8.0</hutool.version>
@@ -164,17 +164,17 @@
     </build>
 
     <!--使用aliyun的Maven镜像源提升下载速度-->
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>aliyunmaven</id>-->
-<!--            <name>aliyun</name>-->
-<!--            <url>https://maven.aliyun.com/repository/public</url>-->
-<!--        </repository>-->
-<!--        <repository>-->
-<!--            <id>central2</id>-->
-<!--            <name>central2</name>-->
-<!--            <url>https://repo1.maven.org/maven2/</url>-->
-<!--        </repository>-->
-<!--    </repositories>-->
+    <!--    <repositories>-->
+    <!--        <repository>-->
+    <!--            <id>aliyunmaven</id>-->
+    <!--            <name>aliyun</name>-->
+    <!--            <url>https://maven.aliyun.com/repository/public</url>-->
+    <!--        </repository>-->
+    <!--        <repository>-->
+    <!--            <id>central2</id>-->
+    <!--            <name>central2</name>-->
+    <!--            <url>https://repo1.maven.org/maven2/</url>-->
+    <!--        </repository>-->
+    <!--    </repositories>-->
 
 </project>
