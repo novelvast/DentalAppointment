@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <artifactId>approval-service</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>approval-service</name>
-    <description>approval-service</description>
+    <artifactId>message-service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>message-service</name>
+    <description>message-service</description>
 
     <dependencies>
         <!--mysql数据库-->
