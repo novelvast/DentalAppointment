@@ -5,6 +5,9 @@ service-url:
   personal-info-service: http://localhost:8101
 
 spring:
+#  main:
+#    web-application-type: reactive
+#    allow-bean-definition-overriding: true
   application:
     name: gateway-service
   cloud:
@@ -23,3 +26,8 @@ spring:
             - StripPrefix=1
             - PrefixPath=/api/patient
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: 'http://localhost:9101/rsa/publicKey' #配置RSA的公钥访问地址

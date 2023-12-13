@@ -1,4 +1,6 @@
-## 提交修改流程
+### 提交修改流程
+
+#### 提交前先git pull，没冲突再push！！！！！！！！
 
 1. 在自己对应微服务的目录下，编写自己的代码。
 2. 添加maven依赖时，在自己微服务的pom中添加，不用写version，统一从父项目中拿，没有时在父项目的dependenyManager中添加，防止版本不一致产生问题
@@ -10,13 +12,25 @@
 
 
 
-
+### 各中间件
 
 nacos后台地址：http://47.115.205.56:8848/nacos
 
 用户名：nacos 
 
 密码：microservice
+
+
+
+redis地址：http://47.115.205.56:6379
+
+密码：microservice
+
+
+
+
+
+
 
 
 
@@ -52,7 +66,7 @@ nacos后台地址：http://47.115.205.56:8848/nacos
 | RocketMQ             | 消息队列              | 4.9.4                    |
 | MyBatis-plus         | 数据库代码生成        | 3.2.0                    |
 | MySQL                | 数据库                |                          |
-|                      |                       |                          |
+| Redis                | 缓存数据库            | 7.0.12                   |
 |                      |                       |                          |
 |                      |                       |                          |
 |                      |                       |                          |
@@ -79,8 +93,8 @@ nacos后台地址：http://47.115.205.56:8848/nacos
 - [x] 整合nacos-config实现配置管理
 - [x] 整合swagger实现接口文档生成
 - [x] 整合feign实现远程接口调用
-- [ ] 整合oauth2+jwt实现鉴权
-- [ ] 整合gateway实现网关服务
+- [x] 整合oauth2+jwt实现鉴权
+- [x] 整合gateway实现网关服务
 - [ ] 整合sentinel
 - [ ] 不要明文密码
 - [ ] mybatis-generator共用
