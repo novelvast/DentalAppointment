@@ -1,9 +1,102 @@
 package com.microservice.personalinfoservice.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.microservice.common.api.CommonResult;
+import com.microservice.common.domain.UserDto;
+import com.microservice.personalinfoservice.dto.DoctorDto;
+import com.microservice.personalinfoservice.service.AdminInfoService;
+import com.microservice.personalinfoservice.service.DoctorInfoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+/**
+ * 管理员信息管理Controller
+ *
+ * @author zhao
+ * @date 2023/12/14
+ */
+@Api(tags = "AdminInfoController", description = "管理员信息管理")
 @RestController
-@RequestMapping("/api/admininfo")
+@RequestMapping("/api/admin")
 public class AdminInfoController {
+    @Autowired
+    private AdminInfoService adminInfoService;
+
+    @ApiOperation("管理员注册")
+    @PostMapping("/register")
+    public CommonResult register(@RequestParam String username,
+                                 @RequestParam String password,
+                                 @RequestParam String phone,
+                                 @RequestParam String email,
+                                 @RequestParam String hospital,
+                                 @RequestParam String name,
+                                 @RequestParam Integer jobNumber){
+
+        Boolean result = adminInfoService.register(username, password, phone, email,hospital, name, jobNumber);
+        if(result == Boolean.TRUE) {
+            return CommonResult.success(null,"注册成功");
+        }
+        else {
+            return CommonResult.failed("注册失败");
+        }
+    }
+
+    @ApiOperation("管理员登陆")
+    @PostMapping("/login")
+    public CommonResult login(@RequestParam String username,
+                              @RequestParam String password){
+
+        return adminInfoService.login(username, password);
+    }
+
+    // 根据患者名获取患者信息
+    @ApiOperation("根据管理员名获取管理员信息")
+    @GetMapping("/{patientName}")
+    public CommonResult getByName(@PathVariable String patientName){
+        DoctorDto doctorDto = adminInfoService.getByName(patientName);
+        if(doctorDto == null) {
+            return CommonResult.failed("查无此人");
+        }
+        return CommonResult.success(doctorDto);
+    }
+
+    @ApiOperation("修改管理员信息")
+    @PostMapping("/update")
+    public CommonResult updatePatientInfo(@RequestParam String username,
+                                          @RequestParam String phone,
+                                          @RequestParam String email,
+                                          @RequestParam String hospital,
+                                          @RequestParam String name,
+                                          @RequestParam Integer jobNumber){
+        Boolean result = adminInfoService.updateInfo(username, phone, email, hospital, name, jobNumber);
+        if(result == Boolean.TRUE) {
+            return CommonResult.success(null,"修改成功");
+        }
+        else {
+            return CommonResult.failed("修改失败");
+        }
+
+    }
+
+    @ApiOperation("修改管理员密码")
+    @PostMapping("/update/password")
+    public CommonResult updatePatientInfo(@RequestParam String username,
+                                          @RequestParam String password){
+        Boolean result = adminInfoService.updatePassword(username, password);
+        if(result == Boolean.TRUE) {
+            return CommonResult.success(null,"修改成功");
+        }
+        else {
+            return CommonResult.failed("修改失败");
+        }
+
+    }
+
+
+    @ApiOperation("根据管理员名获取认证信息")
+    @GetMapping("/loadByUsername")
+    public UserDto loadUserByUsername(@RequestParam String username){
+        return adminInfoService.loadUserByUsername(username);
+    }
 }

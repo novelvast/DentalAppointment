@@ -1,33 +1,26 @@
-package com.microservice.personalinfoservice.entity;
+package com.microservice.personalinfoservice.dto;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
-
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Zhao
- * @since 2023-12-05
+ * @since 2023-12-14
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@NoArgsConstructor
-@AllArgsConstructor
-public class AdminInfo implements Serializable {
-
+public class DoctorDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String username;
-
-    private String password;
 
     private String phone;
 
@@ -38,6 +31,4 @@ public class AdminInfo implements Serializable {
     private String name;
 
     private Integer jobNumber;
-
-
 }

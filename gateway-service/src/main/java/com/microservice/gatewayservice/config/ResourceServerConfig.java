@@ -1,5 +1,6 @@
 package com.microservice.gatewayservice.config;
 
+import cn.hutool.core.util.ArrayUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +42,10 @@ public class ResourceServerConfig {
 //                .and().exceptionHandling()
 //                .accessDeniedHandler(restfulAccessDeniedHandler)//处理未授权
 //                .authenticationEntryPoint(restAuthenticationEntryPoint)//处理未认证
-                .and().authorizeExchange().anyExchange().authenticated()    // 所有请求认证
+
+                .pathMatchers("/login").permitAll()//白名单配置
+                .pathMatchers("/register").permitAll()//白名单配置
+                .anyExchange().authenticated()    // 所有请求认证
                 .and().csrf().disable();
         return http.build();
     }

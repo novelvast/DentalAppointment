@@ -6,38 +6,37 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.microservice.common.api.CommonResult;
 import com.microservice.common.domain.UserDto;
-import com.microservice.personalinfoservice.dto.PatientDto;
-import com.microservice.personalinfoservice.entity.PatientInfo;
-import com.microservice.personalinfoservice.mapper.PatientInfoMapper;
+import com.microservice.personalinfoservice.dto.AdminDto;
+import com.microservice.personalinfoservice.entity.AdminInfo;
+import com.microservice.personalinfoservice.mapper.AdminInfoMapper;
+import com.microservice.personalinfoservice.service.AdminInfoService;
 import com.microservice.personalinfoservice.service.AuthService;
-import com.microservice.personalinfoservice.service.PatientInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class PatientInfoServiceImpl implements PatientInfoService {
+public class AdminInfoServiceImpl implements AdminInfoService {
 
     @Autowired
-    private PatientInfoMapper patientInfoMapper;
+    private AdminInfoMapper adminInfoMapper;
 
     @Autowired
     private AuthService authService;
 
     @Override
-    public Boolean register(String username, String password, String phone, String email, String idNumber,
-                            String name, String gender, LocalDate birthday) {
+    public Boolean register(String username, String password, String phone, String email, String hospital,
+                            String name, Integer jobNumber) {
         // 查询是否已有该用户
         if (getByName(username) == null){
             return Boolean.FALSE;
         }
 
         // 没有对该用户进行添加操作
-        int result = patientInfoMapper.insert(new PatientInfo(username, password, phone, email, idNumber,
-                name, gender, birthday));
+        int result = adminInfoMapper.insert(new AdminInfo(username, password, phone, email, hospital,
+                name, jobNumber));
         if(result == 1){
             return Boolean.TRUE;
         }
@@ -61,38 +60,37 @@ public class PatientInfoServiceImpl implements PatientInfoService {
     }
 
     @Override
-    public PatientDto getByName(String username) {
-        PatientInfo patientInfo = getAllInfoByName(username);
+    public AdminDto getByName(String username) {
+        AdminInfo adminInfo = getAllInfoByName(username);
 
-        if(patientInfo != null) {
-            PatientDto patientDto =new PatientDto();
-            BeanUtil.copyProperties(patientInfo, patientDto);
-            return patientDto;
+        if(adminInfo != null) {
+            AdminDto adminDto = new AdminDto();
+            BeanUtil.copyProperties(adminInfo, adminDto);
+            return adminDto;
         }
         return null;
     }
 
     @Override
-    public PatientInfo getAllInfoByName(String username) {
-        QueryWrapper<PatientInfo> patientInfoQueryWrapper = new QueryWrapper<>();
-        patientInfoQueryWrapper.eq("username", username);
+    public AdminInfo getAllInfoByName(String username) {
+        QueryWrapper<AdminInfo> adminInfoQueryWrapper = new QueryWrapper<>();
+        adminInfoQueryWrapper.eq("username", username);
 
-        return patientInfoMapper.selectOne(patientInfoQueryWrapper);
+        return adminInfoMapper.selectOne(adminInfoQueryWrapper);
     }
 
     @Override
-    public Boolean updateInfo(String username, String phone, String email, String IDNumber, String name,
-                              String gender, String birthday) {
-        UpdateWrapper<PatientInfo> patientInfoUpdateWrapper = new UpdateWrapper<>();
-        patientInfoUpdateWrapper.eq("username",username)
+    public Boolean updateInfo(String username, String phone, String email, String hospital, String name,
+                              Integer jobNumber) {
+        UpdateWrapper<AdminInfo> adminInfoUpdateWrapper = new UpdateWrapper<>();
+        adminInfoUpdateWrapper.eq("username",username)
                 .set("phone", phone)
                 .set("email", email)
-                .set("id_number", IDNumber)
+                .set("hospital", hospital)
                 .set("name", name)
-                .set("gender", gender)
-                .set("birthday", birthday);
+                .set("jobNumber", jobNumber);
 
-        int result = patientInfoMapper.update(null, patientInfoUpdateWrapper);
+        int result = adminInfoMapper.update(null, adminInfoUpdateWrapper);
 
         if(result == 1){
             return Boolean.TRUE;
@@ -104,11 +102,11 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 
     @Override
     public Boolean updatePassword(String username, String password) {
-        UpdateWrapper<PatientInfo> patientInfoUpdateWrapper = new UpdateWrapper<>();
-        patientInfoUpdateWrapper.eq("username",username)
+        UpdateWrapper<AdminInfo> adminInfoUpdateWrapper = new UpdateWrapper<>();
+        adminInfoUpdateWrapper.eq("username",username)
                 .set("password", password);
 
-        int result = patientInfoMapper.update(null, patientInfoUpdateWrapper);
+        int result = adminInfoMapper.update(null, adminInfoUpdateWrapper);
 
         if(result == 1){
             return Boolean.TRUE;
@@ -120,11 +118,11 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 
     @Override
     public UserDto loadUserByUsername(String username) {
-        PatientInfo patientInfo = getAllInfoByName(username);
+        AdminInfo adminInfo = getAllInfoByName(username);
 
-        if(patientInfo != null) {
+        if(adminInfo != null) {
             UserDto userDto = new UserDto();
-            BeanUtil.copyProperties(patientInfo, userDto);
+            BeanUtil.copyProperties(adminInfo, userDto);
             return userDto;
         }
         return null;

@@ -7,12 +7,19 @@ import com.microservice.personalinfoservice.entity.PatientInfo;
 
 import java.time.LocalDate;
 
+/**
+ * 患者信息管理Service
+ *
+ * @author zhao
+ * @date 2023/12/14
+ */
 public interface PatientInfoService {
 
     /**
      * 患者注册
      */
-    Boolean register(String username, String password, String phone, String email, String idNumber, String name, String gender, LocalDate birthday);
+    Boolean register(String username, String password, String phone, String email, String idNumber, String name,
+                     String gender, LocalDate birthday);
 
     /**
      * 患者登陆
@@ -25,20 +32,24 @@ public interface PatientInfoService {
     PatientDto getByName(String username);
 
     /**
-     * 根据患者名获取所有患者信息
+     * 根据患者名获取患者所有信息
      */
     PatientInfo getAllInfoByName(String username);
 
     /**
      * 修改患者信息
      */
-    Boolean updateInfo(String username, String phone, String email, String IDNumber, String name, String gender, String birthday);
+    Boolean updateInfo(String username, String phone, String email, String IDNumber, String name,
+                       String gender, String birthday);
 
     /**
      * 修改患者密码
      */
-    void updatePassword(String username, String password);
+    Boolean updatePassword(String username, String password);
 
+    /**
+     * 获取用户名和密码，认证服务调用
+     */
     UserDto loadUserByUsername(String username);
 
 }

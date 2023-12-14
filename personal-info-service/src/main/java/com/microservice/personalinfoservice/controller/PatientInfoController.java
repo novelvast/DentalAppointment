@@ -14,6 +14,9 @@ import java.time.LocalDate;
 
 /**
  * 患者信息管理Controller
+ *
+ * @author zhao
+ * @date 2023/12/14
  */
 @Api(tags = "PatientInfoController", description = "患者信息管理")
 @RestController
@@ -45,7 +48,7 @@ public class PatientInfoController {
         }
     }
 
-    // 患者登陆
+    @ApiOperation("患者登陆")
     @PostMapping("/login")
     public CommonResult login(@RequestParam String username,
                               @RequestParam String password){
@@ -64,8 +67,8 @@ public class PatientInfoController {
         return CommonResult.success(patientDto);
     }
 
-    // 修改患者信息
-    @PutMapping("/update")
+    @ApiOperation("修改患者信息")
+    @PostMapping("/update")
     public CommonResult updatePatientInfo(@RequestParam String username,
                                           @RequestParam String phone,
                                           @RequestParam String email,
@@ -73,22 +76,32 @@ public class PatientInfoController {
                                           @RequestParam String name,
                                           @RequestParam String gender,
                                           @RequestParam String birthday){
-        patientInfoService.updateInfo(username, phone, email, IDNumber, name, gender, birthday);
-        return CommonResult.success(null,"修改成功");
+        Boolean result = patientInfoService.updateInfo(username, phone, email, IDNumber, name, gender, birthday);
+        if(result == Boolean.TRUE) {
+            return CommonResult.success(null,"修改成功");
+        }
+        else {
+            return CommonResult.failed("修改失败");
+        }
 
     }
 
-    // 修改密码
-    @PutMapping("/update/password")
+    @ApiOperation("修改患者密码")
+    @PostMapping("/update/password")
     public CommonResult updatePatientInfo(@RequestParam String username,
                                           @RequestParam String password){
-        patientInfoService.updatePassword(username, password);
-        return CommonResult.success(null,"修改成功");
+        Boolean result = patientInfoService.updatePassword(username, password);
+        if(result == Boolean.TRUE) {
+            return CommonResult.success(null,"修改成功");
+        }
+        else {
+            return CommonResult.failed("修改失败");
+        }
 
     }
 
-    // 根据患者名获取患者信息
-    @ApiOperation("根据患者名获取患者信息")
+
+    @ApiOperation("根据患者名获取认证信息")
     @GetMapping("/loadByUsername")
     public UserDto loadUserByUsername(@RequestParam String username){
         return patientInfoService.loadUserByUsername(username);
