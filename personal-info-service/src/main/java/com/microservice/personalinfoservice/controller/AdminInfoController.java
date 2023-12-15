@@ -2,6 +2,7 @@ package com.microservice.personalinfoservice.controller;
 
 import com.microservice.common.api.CommonResult;
 import com.microservice.common.domain.UserDto;
+import com.microservice.personalinfoservice.dto.AdminDto;
 import com.microservice.personalinfoservice.dto.DoctorDto;
 import com.microservice.personalinfoservice.service.AdminInfoService;
 import com.microservice.personalinfoservice.service.DoctorInfoService;
@@ -54,11 +55,11 @@ public class AdminInfoController {
     @ApiOperation("根据管理员名获取管理员信息")
     @GetMapping("/{patientName}")
     public CommonResult getByName(@PathVariable String patientName){
-        DoctorDto doctorDto = adminInfoService.getByName(patientName);
-        if(doctorDto == null) {
+        AdminDto adminDto = adminInfoService.getByName(patientName);
+        if(adminDto == null) {
             return CommonResult.failed("查无此人");
         }
-        return CommonResult.success(doctorDto);
+        return CommonResult.success(adminDto);
     }
 
     @ApiOperation("修改管理员信息")
