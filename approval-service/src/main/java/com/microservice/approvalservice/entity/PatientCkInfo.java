@@ -34,6 +34,7 @@ public class PatientCkInfo implements Serializable {
     private String cancelReason;
 
     private String auditStatus;
+
     public void setPatientUsername(String patientUsername) {
         this.patientUsername = patientUsername;
     }

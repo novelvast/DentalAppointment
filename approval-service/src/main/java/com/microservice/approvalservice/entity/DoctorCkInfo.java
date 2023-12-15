@@ -3,8 +3,11 @@ package com.microservice.approvalservice.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -18,14 +21,24 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class DoctorCkInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     private String doctorUsername;
+
+    private Integer orderId;
+
+    private String adminUsername;
+
+    private String cancelReason;
+
+    private String auditStatus;
+
 
     public void setDoctorUsername(String doctorUsername) {
         this.doctorUsername = doctorUsername;
@@ -46,14 +59,4 @@ public class DoctorCkInfo implements Serializable {
     public void setAuditStatus(String auditStatus) {
         this.auditStatus = auditStatus;
     }
-
-    private Integer orderId;
-
-    private String adminUsername;
-
-    private String cancelReason;
-
-    private String auditStatus;
-
-
 }
