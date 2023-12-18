@@ -71,7 +71,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         int insert = orderInfoMapper.insert(orderInfo);
         log.warn("insert==>{}", insert);
         hospitalManageService.appointment(orderInfo.getHospital(),orderInfo.getDoctorId(),orderInfo.getPatientId(),orderInfo.getOrderTime(),orderInfo.getClinicTime(),orderInfo.getOrderDepartment(),orderInfo.getDiseaseDescription());
-        //TODO:写到医院数据库中
+        //TODO:发消息给医院管理，医院管理监听到修改医院数据库
 
         if (insert == 1) {
             return orderInfo.getId();

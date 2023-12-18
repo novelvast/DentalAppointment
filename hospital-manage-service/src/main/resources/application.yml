@@ -9,6 +9,12 @@ spring:
         server-addr: 47.115.205.56:8848
         username: nacos
         password: microservice
+  rabbitmq:
+    host: 47.115.205.56
+    port: 5672
+    username: rabbitmq
+    password: microservice
+    virtualHost: /
 
 
 
