@@ -3,7 +3,7 @@ server:
 
 service-url:
   personal-info-service: http://localhost:8101
-
+  appointment-service: http://localhost:8201
 spring:
 #  main:
 #    web-application-type: reactive
@@ -25,6 +25,14 @@ spring:
           filters:
             - StripPrefix=1
             - PrefixPath=/api/patient
+
+        - id: appointment-service
+          uri: ${service-url.appointment-service}
+          predicates:
+            - Path=/appointment/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/api/appointment
 
   security:
     oauth2:
