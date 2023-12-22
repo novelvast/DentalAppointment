@@ -110,7 +110,7 @@ public class ApprovalServiceImpl implements ApprovalService {
         List<DoctorCkInfo> doctorCkInfoList= doctorCkInfoMapper.find(adminUsername);
         return CommonResult.success(doctorCkInfoList);
     }
-
+//    @GlobalTransactional
     @Override
     public String check(Integer approvalId,String kind,Integer judge){
         if(judge==1){
@@ -167,9 +167,11 @@ public class ApprovalServiceImpl implements ApprovalService {
             // 修改属性名
             ((ObjectNode) jsonNode).put("username", jsonNode.get("doctorUsername"));
             ((ObjectNode) jsonNode).remove("doctorUsername");
+            ((ObjectNode) jsonNode).put("kind", "医生");
 
             // 将修改后的 JsonNode 转换为 JSON 字符串
             String modifiedJsonString = objectMapper2.writeValueAsString(jsonNode);
+
             ObjectMapper objectMapper3 = new ObjectMapper();
             RabbitResult rabbitResult=new RabbitResult();
             rabbitResult.setData(modifiedJsonString);
@@ -198,6 +200,7 @@ public class ApprovalServiceImpl implements ApprovalService {
             // 修改属性名
             ((ObjectNode) jsonNode).put("username", jsonNode.get("patientUsername"));
             ((ObjectNode) jsonNode).remove("patientUsername");
+            ((ObjectNode) jsonNode).put("kind", "患者");
 
             // 将修改后的 JsonNode 转换为 JSON 字符串
             String modifiedJsonString = objectMapper2.writeValueAsString(jsonNode);

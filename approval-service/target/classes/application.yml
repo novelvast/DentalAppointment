@@ -20,3 +20,17 @@ spring:
     username: rabbitmq
     password: microservice
     virtualHost: /
+# seata配置
+seata:
+  tx-service-group: xzw-approval-group  #这里每个服务都是对应不同的映射名,在配置中心可以看到
+  registry:
+    type: nacos
+    nacos:
+      server-addr: 47.115.205.56:8848
+      username: nacos
+      password: microservice
+      group: SEATA_GROUP
+  service:
+    vgroup-mapping:
+      #这里也要注意 key为映射名,
+      xzw-approval-group: default
