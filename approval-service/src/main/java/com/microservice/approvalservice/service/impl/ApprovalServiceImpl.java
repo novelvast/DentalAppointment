@@ -1,14 +1,17 @@
 package com.microservice.approvalservice.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.microservice.approvalservice.entity.CheckResult;
 import com.microservice.approvalservice.entity.DoctorCkInfo;
 import com.microservice.approvalservice.entity.PatientCkInfo;
+import com.microservice.approvalservice.entity.RabbitResult;
 import com.microservice.approvalservice.list_to_json;
 import com.microservice.approvalservice.mapper.DoctorCkInfoMapper;
 import com.microservice.approvalservice.mapper.PatientCkInfoMapper;
+import com.microservice.approvalservice.service.ApprovalMQService;
 import com.microservice.approvalservice.service.ApprovalService;
 import com.microservice.common.api.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,8 @@ public class ApprovalServiceImpl implements ApprovalService {
     DoctorCkInfoMapper doctorCkInfoMapper;
     @Autowired
     FeignServiceImpl mess;
+    @Autowired
+    ApprovalMQService approvalMQService;
 
     @Override
     public Boolean patient_put(String patientUsername,Integer orderId,String adminUsername,String cancelReason,String auditStatus){
@@ -60,6 +65,40 @@ public class ApprovalServiceImpl implements ApprovalService {
         }
     }
 
+    @Override
+    public void rabbit_put(String Username,Integer orderId,String adminUsername,String cancelReason,String auditStatus,String kind) {
+        RabbitResult rabbitResult=new RabbitResult();
+        if(Objects.equals(kind, "医生")){
+            boolean judge =doctor_put(Username,orderId,adminUsername,cancelReason,auditStatus);
+            if(judge==Boolean.TRUE){
+                rabbitResult.setData("插入数据库成功");
+                rabbitResult.setType("结果信息");
+            }
+            else {
+                rabbitResult.setData("插入数据库失败");
+                rabbitResult.setType("结果信息");
+            }
+        }
+        else if(Objects.equals(kind, "患者")){
+            boolean judge =patient_put(Username,orderId,adminUsername,cancelReason,auditStatus);
+            if(judge==Boolean.TRUE){
+                rabbitResult.setData("插入数据库成功");
+                rabbitResult.setType("结果信息");
+            }
+            else{
+                rabbitResult.setData("插入数据库失败");
+                rabbitResult.setType("结果信息");
+            }
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonStr;
+        try {
+            jsonStr = objectMapper.writeValueAsString(rabbitResult);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        approvalMQService.sendResult(jsonStr);
+    }
     @Override
     public CommonResult patient_get(String adminUsername){
         List<PatientCkInfo> patientCkInfoList= patientCkInfoMapper.find_patient(adminUsername);
@@ -131,6 +170,17 @@ public class ApprovalServiceImpl implements ApprovalService {
 
             // 将修改后的 JsonNode 转换为 JSON 字符串
             String modifiedJsonString = objectMapper2.writeValueAsString(jsonNode);
+            ObjectMapper objectMapper3 = new ObjectMapper();
+            RabbitResult rabbitResult=new RabbitResult();
+            rabbitResult.setData(modifiedJsonString);
+            rabbitResult.setType("审核结果");
+            String jsonStr;
+            try {
+                jsonStr = objectMapper3.writeValueAsString(rabbitResult);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+            approvalMQService.sendResult(jsonStr);
             System.out.println( mess.send(modifiedJsonString));
         } catch (Exception e) {
             e.printStackTrace();
@@ -151,6 +201,18 @@ public class ApprovalServiceImpl implements ApprovalService {
 
             // 将修改后的 JsonNode 转换为 JSON 字符串
             String modifiedJsonString = objectMapper2.writeValueAsString(jsonNode);
+
+            ObjectMapper objectMapper3 = new ObjectMapper();
+            RabbitResult rabbitResult=new RabbitResult();
+            rabbitResult.setData(modifiedJsonString);
+            rabbitResult.setType("审核结果");
+            String jsonStr;
+            try {
+                jsonStr = objectMapper3.writeValueAsString(rabbitResult);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+            approvalMQService.sendResult(jsonStr);
             System.out.println( mess.send(modifiedJsonString));
         } catch (Exception e) {
             e.printStackTrace();

@@ -11,6 +11,15 @@ public interface ApprovalService {
 
     Boolean doctor_put(String doctorUsername,Integer orderId,String adminUsername,String cancelReason,String auditStatus);
 
+    /*
+    *
+    *
+    * 上面是接口插入，下面是消息队列插入
+    *
+    *
+    *
+    * */
+    void rabbit_put(String Username,Integer orderId,String adminUsername,String cancelReason,String auditStatus,String kind);
     CommonResult patient_get(String adminUsername);
 
     CommonResult doctor_get(String adminUsername);

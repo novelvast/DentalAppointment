@@ -55,12 +55,12 @@ public class ApprovalController {
             return CommonResult.failed("添加医生信息失败");
         }
     }
-    @ApiOperation("获得某管理员的患者审核数")
+    @ApiOperation("获得某管理员的患者审核信息")
     @GetMapping("/patient")
     public CommonResult patient_get(@RequestParam String adminUsername){
         return approvalService.patient_get(adminUsername);
     }
-    @ApiOperation("获得某管理员的医生审核数")
+    @ApiOperation("获得某管理员的医生审核信息")
     @GetMapping("/doctor")
     public CommonResult doctor_get(@RequestParam String adminUsername){
         return approvalService.doctor_get(adminUsername);
