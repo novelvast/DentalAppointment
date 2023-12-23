@@ -9,6 +9,7 @@ import com.microservice.messageservice.mapper.MessageMapper;
 import com.microservice.messageservice.service.impl.Feign_Service;
 import com.microservice.messageservice.service.impl.Message_service;
 import com.microservice.messageservice.service.impl.SendEmail;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class messageservice implements Message_service {
         List<Message> mess=messageMapper.select(username);
         return CommonResult.success(mess);
     }
-//    @GlobalTransactional
+    @GlobalTransactional
     @Override
     public String send_message(String userbody) {
         try {
