@@ -11,6 +11,7 @@
 
     <modules>
         <module>common</module>
+        <module>personal-info-service</module>
     </modules>
 
     <parent>
@@ -42,12 +43,6 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
-
-
-        <dependency>
-            <groupId>com.microservice</groupId>
-            <artifactId>common</artifactId>
-        </dependency>
 
 
 
