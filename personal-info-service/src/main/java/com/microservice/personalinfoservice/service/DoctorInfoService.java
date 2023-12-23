@@ -18,7 +18,7 @@ public interface DoctorInfoService {
     /**
      * 医生注册
      */
-    Boolean register(String username, String password, String phone, String email, String hospital, String name,
+    Boolean register(String username, String password, String phone, String email, Integer hospitalId, String name,
                      Integer jobNumber);
 
     /**
@@ -39,7 +39,7 @@ public interface DoctorInfoService {
     /**
      * 修改医生信息
      */
-    Boolean updateInfo(String username, String phone, String email, String hospital, String name, Integer jobNumber);
+    Boolean updateInfo(String username, String phone, String email, Integer hospitalId, String name, Integer jobNumber);
 
     /**
      * 修改医生密码

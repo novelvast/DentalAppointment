@@ -23,6 +23,7 @@
       <module name="approval-service" options="-parameters" />
       <module name="auth-service" options="-parameters" />
       <module name="common" options="-parameters" />
+      <module name="dental-appointment" options="" />
       <module name="gateway-service" options="-parameters" />
       <module name="hospital-manage-service" options="-parameters" />
       <module name="personal-info-service" options="-parameters" />

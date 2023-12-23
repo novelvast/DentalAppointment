@@ -29,15 +29,27 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 
     @Override
     public Boolean register(String username, String password, String phone, String email, String idNumber,
-                            String name, String gender, LocalDate birthday) {
+                            String name, String gender, String birthday) {
+
         // 查询是否已有该用户
-        if (getByName(username) == null){
+        if (getByName(username) != null){
             return Boolean.FALSE;
         }
 
         // 没有对该用户进行添加操作
-        int result = patientInfoMapper.insert(new PatientInfo(username, password, phone, email, idNumber,
-                name, gender, birthday));
+        PatientInfo patientInfo = new PatientInfo();
+        patientInfo.setUsername(username);
+        patientInfo.setPassword(password);
+        patientInfo.setPhone(phone);
+        patientInfo.setEmail(email);
+        patientInfo.setIdNumber(idNumber);
+        patientInfo.setName(name);
+        patientInfo.setGender(gender);
+        patientInfo.setBirthday(birthday);
+
+
+        int result = patientInfoMapper.insert(patientInfo);
+
         if(result == 1){
             return Boolean.TRUE;
         }
@@ -65,7 +77,7 @@ public class PatientInfoServiceImpl implements PatientInfoService {
         PatientInfo patientInfo = getAllInfoByName(username);
 
         if(patientInfo != null) {
-            PatientDto patientDto =new PatientDto();
+            PatientDto patientDto = new PatientDto();
             BeanUtil.copyProperties(patientInfo, patientDto);
             return patientDto;
         }

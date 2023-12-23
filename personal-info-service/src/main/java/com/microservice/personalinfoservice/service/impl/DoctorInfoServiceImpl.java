@@ -28,18 +28,27 @@ public class DoctorInfoServiceImpl implements DoctorInfoService {
     private AuthService authService;
 
     @Override
-    public Boolean register(String username, String password, String phone, String email, String hospital,
+    public Boolean register(String username, String password, String phone, String email, Integer hospitalId,
                             String name, Integer jobNumber) {
         // 查询是否已有该用户
-        if (getByName(username) == null){
+        if (getByName(username) != null){
             return Boolean.FALSE;
         }
 
         // TODO 调用hospital-manage判断医生工号
 
+
+
         // 没有对该用户进行添加操作
-        int result = doctorInfoMapper.insert(new DoctorInfo(username, password, phone, email, hospital,
-                name, jobNumber));
+        DoctorInfo doctorInfo = new DoctorInfo();
+        doctorInfo.setUsername(username);
+        doctorInfo.setPassword(password);
+        doctorInfo.setPhone(phone);
+        doctorInfo.setEmail(email);
+        doctorInfo.setHospitalId(hospitalId);
+        doctorInfo.setName(name);
+        doctorInfo.setJobNumber(jobNumber);
+        int result = doctorInfoMapper.insert(doctorInfo);
         if(result == 1){
             return Boolean.TRUE;
         }
@@ -83,13 +92,13 @@ public class DoctorInfoServiceImpl implements DoctorInfoService {
     }
 
     @Override
-    public Boolean updateInfo(String username, String phone, String email, String hospital, String name,
+    public Boolean updateInfo(String username, String phone, String email, Integer hospitalId, String name,
                               Integer jobNumber) {
         UpdateWrapper<DoctorInfo> doctorInfoUpdateWrapper = new UpdateWrapper<>();
         doctorInfoUpdateWrapper.eq("username",username)
                 .set("phone", phone)
                 .set("email", email)
-                .set("hospital", hospital)
+                .set("hospitalId", hospitalId)
                 .set("name", name)
                 .set("jobNumber", jobNumber);
 

@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author Zhao
- * @since 2023-12-05
+ * @since 2023-12-23
  */
 public interface DoctorInfoMapper extends BaseMapper<DoctorInfo> {
 

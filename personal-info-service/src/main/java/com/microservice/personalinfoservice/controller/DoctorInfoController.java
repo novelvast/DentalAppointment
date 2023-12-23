@@ -31,11 +31,11 @@ public class DoctorInfoController {
                                  @RequestParam String password,
                                  @RequestParam String phone,
                                  @RequestParam String email,
-                                 @RequestParam String hospital,
+                                 @RequestParam Integer hospitalId,
                                  @RequestParam String name,
                                  @RequestParam Integer jobNumber){
 
-        Boolean result = doctorInfoService.register(username, password, phone, email,hospital, name, jobNumber);
+        Boolean result = doctorInfoService.register(username, password, phone, email, hospitalId, name, jobNumber);
         if(result == Boolean.TRUE) {
             return CommonResult.success(null,"注册成功");
         }
@@ -64,14 +64,14 @@ public class DoctorInfoController {
     }
 
     @ApiOperation("修改医生信息")
-    @PostMapping("/update")
+    @PutMapping("/")
     public CommonResult updatePatientInfo(@RequestParam String username,
                                           @RequestParam String phone,
                                           @RequestParam String email,
-                                          @RequestParam String hospital,
+                                          @RequestParam Integer hospitalId,
                                           @RequestParam String name,
                                           @RequestParam Integer jobNumber){
-        Boolean result = doctorInfoService.updateInfo(username, phone, email, hospital, name, jobNumber);
+        Boolean result = doctorInfoService.updateInfo(username, phone, email, hospitalId, name, jobNumber);
         if(result == Boolean.TRUE) {
             return CommonResult.success(null,"修改成功");
         }
@@ -82,7 +82,7 @@ public class DoctorInfoController {
     }
 
     @ApiOperation("修改医生密码")
-    @PostMapping("/update/password")
+    @PutMapping("/password")
     public CommonResult updatePatientInfo(@RequestParam String username,
                                           @RequestParam String password){
         Boolean result = doctorInfoService.updatePassword(username, password);

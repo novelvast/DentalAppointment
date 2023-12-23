@@ -8,6 +8,7 @@ import com.microservice.common.api.CommonResult;
 import com.microservice.common.domain.UserDto;
 import com.microservice.personalinfoservice.dto.AdminDto;
 import com.microservice.personalinfoservice.entity.AdminInfo;
+import com.microservice.personalinfoservice.entity.DoctorInfo;
 import com.microservice.personalinfoservice.mapper.AdminInfoMapper;
 import com.microservice.personalinfoservice.service.AdminInfoService;
 import com.microservice.personalinfoservice.service.AuthService;
@@ -27,16 +28,23 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     private AuthService authService;
 
     @Override
-    public Boolean register(String username, String password, String phone, String email, String hospital,
+    public Boolean register(String username, String password, String phone, String email, Integer hospitalId,
                             String name, Integer jobNumber) {
         // 查询是否已有该用户
-        if (getByName(username) == null){
+        if (getByName(username) != null){
             return Boolean.FALSE;
         }
 
         // 没有对该用户进行添加操作
-        int result = adminInfoMapper.insert(new AdminInfo(username, password, phone, email, hospital,
-                name, jobNumber));
+        AdminInfo adminInfo = new AdminInfo();
+        adminInfo.setUsername(username);
+        adminInfo.setPassword(password);
+        adminInfo.setPhone(phone);
+        adminInfo.setEmail(email);
+        adminInfo.setHospitalId(hospitalId);
+        adminInfo.setName(name);
+        adminInfo.setJobNumber(jobNumber);
+        int result = adminInfoMapper.insert(adminInfo);
         if(result == 1){
             return Boolean.TRUE;
         }
@@ -80,13 +88,13 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     }
 
     @Override
-    public Boolean updateInfo(String username, String phone, String email, String hospital, String name,
+    public Boolean updateInfo(String username, String phone, String email, Integer hospitalId, String name,
                               Integer jobNumber) {
         UpdateWrapper<AdminInfo> adminInfoUpdateWrapper = new UpdateWrapper<>();
         adminInfoUpdateWrapper.eq("username",username)
                 .set("phone", phone)
                 .set("email", email)
-                .set("hospital", hospital)
+                .set("hospitalId", hospitalId)
                 .set("name", name)
                 .set("jobNumber", jobNumber);
 
