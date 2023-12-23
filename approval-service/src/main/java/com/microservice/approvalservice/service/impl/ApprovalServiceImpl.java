@@ -14,6 +14,7 @@ import com.microservice.approvalservice.mapper.PatientCkInfoMapper;
 import com.microservice.approvalservice.service.ApprovalMQService;
 import com.microservice.approvalservice.service.ApprovalService;
 import com.microservice.common.api.CommonResult;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -110,7 +111,7 @@ public class ApprovalServiceImpl implements ApprovalService {
         List<DoctorCkInfo> doctorCkInfoList= doctorCkInfoMapper.find(adminUsername);
         return CommonResult.success(doctorCkInfoList);
     }
-//    @GlobalTransactional
+    @GlobalTransactional
     @Override
     public String check(Integer approvalId,String kind,Integer judge){
         if(judge==1){

@@ -14,6 +14,7 @@
         <module name="appointment-service" />
         <module name="gateway-service" />
         <module name="approval-service" />
+        <module name="message-service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -26,6 +27,7 @@
       <module name="dental-appointment" options="" />
       <module name="gateway-service" options="-parameters" />
       <module name="hospital-manage-service" options="-parameters" />
+      <module name="message-service" options="-parameters" />
       <module name="personal-info-service" options="-parameters" />
     </option>
   </component>
