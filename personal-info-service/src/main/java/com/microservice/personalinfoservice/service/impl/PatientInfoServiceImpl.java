@@ -85,6 +85,18 @@ public class PatientInfoServiceImpl implements PatientInfoService {
     }
 
     @Override
+    public PatientDto getById(Integer patientId) {
+        PatientInfo patientInfo = patientInfoMapper.selectById(patientId);
+
+        if(patientInfo != null) {
+            PatientDto patientDto = new PatientDto();
+            BeanUtil.copyProperties(patientInfo, patientDto);
+            return patientDto;
+        }
+        return null;
+    }
+
+    @Override
     public PatientInfo getAllInfoByName(String username) {
         QueryWrapper<PatientInfo> patientInfoQueryWrapper = new QueryWrapper<>();
         patientInfoQueryWrapper.eq("username", username);
@@ -138,6 +150,16 @@ public class PatientInfoServiceImpl implements PatientInfoService {
             UserDto userDto = new UserDto();
             BeanUtil.copyProperties(patientInfo, userDto);
             return userDto;
+        }
+        return null;
+    }
+
+    @Override
+    public String getEmailByName(String username) {
+        PatientInfo patientInfo = getAllInfoByName(username);
+
+        if(patientInfo != null) {
+            return patientInfo.getEmail();
         }
         return null;
     }

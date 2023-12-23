@@ -3,6 +3,7 @@ package com.microservice.personalinfoservice.controller;
 import com.microservice.common.api.CommonResult;
 import com.microservice.common.domain.UserDto;
 import com.microservice.personalinfoservice.dto.DoctorDto;
+import com.microservice.personalinfoservice.dto.PatientDto;
 import com.microservice.personalinfoservice.service.DoctorInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -95,10 +96,25 @@ public class DoctorInfoController {
 
     }
 
+    @ApiOperation("根据医生id获取医生信息")
+    @GetMapping("/id/{doctorId}")
+    public CommonResult getById(@PathVariable Integer doctorId){
+        DoctorDto doctorDto = doctorInfoService.getById(doctorId);
+        if(doctorDto == null) {
+            return CommonResult.failed("查无此人");
+        }
+        return CommonResult.success(doctorDto);
+    }
 
     @ApiOperation("根据医生名获取认证信息")
     @GetMapping("/loadByUsername")
     public UserDto loadUserByUsername(@RequestParam String username){
         return doctorInfoService.loadUserByUsername(username);
+    }
+
+    @ApiOperation("根据医生名获取邮箱")
+    @PostMapping("/email")
+    public String getEmailByName(@RequestParam String username){
+        return doctorInfoService.getEmailByName(username);
     }
 }

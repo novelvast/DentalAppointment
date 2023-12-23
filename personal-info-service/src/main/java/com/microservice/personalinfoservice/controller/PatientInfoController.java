@@ -55,11 +55,21 @@ public class PatientInfoController {
         return patientInfoService.login(username, password);
     }
 
-    // 根据患者名获取患者信息
+
     @ApiOperation("根据患者名获取患者信息")
     @GetMapping("/{patientName}")
     public CommonResult getByName(@PathVariable String patientName){
         PatientDto patientDto = patientInfoService.getByName(patientName);
+        if(patientDto == null) {
+            return CommonResult.failed("查无此人");
+        }
+        return CommonResult.success(patientDto);
+    }
+
+    @ApiOperation("根据患者id获取患者信息")
+    @GetMapping("/id/{patientId}")
+    public CommonResult getById(@PathVariable Integer patientId){
+        PatientDto patientDto = patientInfoService.getById(patientId);
         if(patientDto == null) {
             return CommonResult.failed("查无此人");
         }
@@ -106,4 +116,10 @@ public class PatientInfoController {
         return patientInfoService.loadUserByUsername(username);
     }
 
+
+    @ApiOperation("根据患者名获取邮箱")
+    @PostMapping("/email")
+    public String getEmailByName(@RequestParam String username){
+        return patientInfoService.getEmailByName(username);
+    }
 }

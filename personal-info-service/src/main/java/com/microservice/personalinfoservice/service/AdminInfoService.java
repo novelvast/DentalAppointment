@@ -27,7 +27,7 @@ public interface AdminInfoService {
     CommonResult login(String username, String password);
 
     /**
-     * 根据管理员名获取患者信息
+     * 根据管理员名获取管理员信息
      */
     AdminDto getByName(String username);
 
