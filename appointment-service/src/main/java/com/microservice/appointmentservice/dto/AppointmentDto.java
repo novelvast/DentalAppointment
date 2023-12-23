@@ -17,4 +17,5 @@ public class AppointmentDto {
     private String orderDepartment;
     private String diseaseDescription;
     private String hospital;
+    private String approvalStatus;
 }

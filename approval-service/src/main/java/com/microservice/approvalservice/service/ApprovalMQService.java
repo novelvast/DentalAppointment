@@ -29,7 +29,7 @@ public class ApprovalMQService {
             JsonNode jsonNode = objectMapper.readTree(messagebody);
 
             // 解析 json
-            String Username = jsonNode.get("Username").asText();
+            String Username = jsonNode.get("username").asText();
             Integer orderId=jsonNode.get("orderId").asInt();
             String adminUsername = jsonNode.get("adminUsername").asText();
             String cancelReason = jsonNode.get("cancelReason").asText();

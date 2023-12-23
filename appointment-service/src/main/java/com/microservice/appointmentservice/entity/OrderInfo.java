@@ -44,4 +44,6 @@ public class OrderInfo {
     @TableField("hospital")
     private String hospital;
 
+    @TableField("approval_status")
+    private String approvalStatus;
 }

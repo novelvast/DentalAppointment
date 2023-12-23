@@ -21,5 +21,7 @@ public interface AppointmentService {
 
     Boolean doctorCancel(Integer orderId);
 
-     AppointmentDto getAppointmentById(Integer id);
+    AppointmentDto getAppointmentById(Integer id);
+    void changeApprovalStatus(Integer orderId,String status);
+    void deleteAppointmentById(Integer id);
 }
