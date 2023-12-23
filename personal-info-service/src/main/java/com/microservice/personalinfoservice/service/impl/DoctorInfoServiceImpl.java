@@ -6,17 +6,20 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.microservice.common.api.CommonResult;
 import com.microservice.common.domain.UserDto;
+import com.microservice.personalinfoservice.dto.DoctorCheckDto;
 import com.microservice.personalinfoservice.dto.DoctorDto;
 import com.microservice.personalinfoservice.entity.DoctorInfo;
 import com.microservice.personalinfoservice.entity.PatientInfo;
 import com.microservice.personalinfoservice.mapper.DoctorInfoMapper;
 import com.microservice.personalinfoservice.service.AuthService;
 import com.microservice.personalinfoservice.service.DoctorInfoService;
+import com.microservice.personalinfoservice.service.HospitalManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class DoctorInfoServiceImpl implements DoctorInfoService {
@@ -27,6 +30,9 @@ public class DoctorInfoServiceImpl implements DoctorInfoService {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private HospitalManageService hospitalManageService;
+
     @Override
     public Boolean register(String username, String password, String phone, String email, Integer hospitalId,
                             String name, Integer jobNumber) {
@@ -35,9 +41,11 @@ public class DoctorInfoServiceImpl implements DoctorInfoService {
             return Boolean.FALSE;
         }
 
-        // TODO 调用hospital-manage判断医生工号
-
-
+        // 调用hospital-manage判断医生工号
+        CommonResult<DoctorCheckDto> commonResult = hospitalManageService.getDoctorName(hospitalId, jobNumber);
+        if(!Objects.equals(commonResult.getData().getName(), name)) {
+            return Boolean.FALSE;
+        }
 
         // 没有对该用户进行添加操作
         DoctorInfo doctorInfo = new DoctorInfo();
