@@ -1,6 +1,7 @@
 package com.microservice.appointmentservice;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.microservice.common.config.RabbitMQConfig;
 import com.microservice.appointmentservice.entity.OrderInfo;
 import com.microservice.appointmentservice.mapper.OrderInfoMapper;
 import com.microservice.appointmentservice.pojo.CancelRedis;
@@ -8,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.ast.Or;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.HashOperations;
@@ -30,6 +33,9 @@ class AppointmentServiceApplicationTests {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
     private static final String CANCEL_COUNT_KEY_PREFIX = "cancelCount:";
     private static final Integer EXPIRE_TIME_SECONDS = 24 * 60 * 60; // 24 小时
     @Test
@@ -47,7 +53,7 @@ class AppointmentServiceApplicationTests {
     }
     @Test
     void patientCancel() {
-        Integer orderId = 15;
+        Integer orderId = 20;
         // 查询对应order的用户
         OrderInfo orderInfo = orderInfoMapper.selectById(orderId);
         String patientId = orderInfo.getPatientId();
@@ -75,5 +81,9 @@ class AppointmentServiceApplicationTests {
         orderInfoMapper.deleteById(orderId);
     }
 
+    @Test
+    void appointmentMQ(){
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_TOPIC_RESERVATION, RabbitMQConfig.ROUTING_KEY_APPROVAL, "ok");
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.microservice.approvalservice.mapper;
 
+import com.microservice.approvalservice.entity.DoctorCkInfo;
 import com.microservice.approvalservice.entity.PatientCkInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Insert;
@@ -20,12 +21,10 @@ import java.util.List;
  */
 @Mapper
 public interface PatientCkInfoMapper extends BaseMapper<PatientCkInfo> {
-    @Select("select * from patient_ck_info")
-    public List<PatientCkInfo> find();
-
-    @Insert("INSERT INTO patient_ck_info (id, patient_username,order_id,admin_username,cancel_reason,audit_status) VALUES (#{id}, #{patientUsername},#{orderId},#{adminUsername},#{cancelReason},#{auditStatus})")
-    void save(PatientCkInfo patientCkInfo);
-
+    @Select("select * from patient_ck_info where admin_username=#{adminUsername}")
+    public List<PatientCkInfo> find_patient(String adminUsername);
+    @Select("select * from patient_ck_info where id=#{approvalid}")
+    PatientCkInfo find_message_patient(Integer approvalid);
     @Update("UPDATE patient_ck_info SET audit_status=#{auditstatus} WHERE id=#{approvalId}")
     void update(String auditstatus,Integer approvalId);
 }

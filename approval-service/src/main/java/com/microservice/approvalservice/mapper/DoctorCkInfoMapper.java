@@ -20,12 +20,10 @@ import java.util.List;
  */
 @Mapper
 public interface DoctorCkInfoMapper extends BaseMapper<DoctorCkInfo> {
-    @Select("select * from doctor_ck_info")
-    public List<DoctorCkInfo> find();
-
-    @Insert("INSERT INTO doctor_ck_info (id, doctor_username,order_id,admin_username,cancel_reason,audit_status) VALUES (#{id}, #{doctorUsername},#{orderId},#{adminUsername},#{cancelReason},#{auditStatus})")
-    void save(DoctorCkInfo doctorCkInfo);
-
+    @Select("select * from doctor_ck_info where admin_username=#{adminUsername}")
+    List<DoctorCkInfo> find(String adminUsername);
+    @Select("select * from doctor_ck_info where id=#{approvalid}")
+    DoctorCkInfo find_message(Integer approvalid);
     @Update("UPDATE doctor_ck_info SET audit_status=#{auditstatus} WHERE id=#{approvalId}")
     void update(String auditstatus,Integer approvalId);
 }

@@ -4,7 +4,7 @@ import cn.hutool.core.lang.Assert;
 import com.alibaba.nacos.common.packagescan.resource.FileSystemResource;
 import com.alibaba.nacos.common.utils.StringUtils;
 import com.microservice.messageservice.entity.Email;
-import com.microservice.messageservice.service.iml.SendEmail;
+import com.microservice.messageservice.service.impl.SendEmail;
 import org.mybatis.logging.Logger;
 import org.mybatis.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
