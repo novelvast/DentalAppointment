@@ -45,11 +45,24 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
         clients.inMemory()
                 .withClient("client_patient")
                 .secret(passwordEncoder.encode("patient"))
-//                .secret("patient")
+                .scopes("patient")
+                .authorizedGrantTypes("password", "refresh_token")
+                .accessTokenValiditySeconds(3600*24)
+                .refreshTokenValiditySeconds(3600*24*7)
+                .and()
+                .withClient("client_doctor")
+                .secret(passwordEncoder.encode("doctor"))
+                .scopes("doctor")
+                .authorizedGrantTypes("password", "refresh_token")
+                .accessTokenValiditySeconds(3600*24)
+                .refreshTokenValiditySeconds(3600*24*7)
+                .and()
+                .withClient("client_admin")
+                .secret(passwordEncoder.encode("admin"))
                 .scopes("all")
                 .authorizedGrantTypes("password", "refresh_token")
-                .accessTokenValiditySeconds(3600)
-                .refreshTokenValiditySeconds(86400);
+                .accessTokenValiditySeconds(3600*24)
+                .refreshTokenValiditySeconds(3600*24*7);
     }
 
     @Override

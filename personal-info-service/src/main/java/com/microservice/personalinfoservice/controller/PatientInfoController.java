@@ -36,8 +36,7 @@ public class PatientInfoController {
                               @RequestParam String idNumber,
                               @RequestParam String name,
                               @RequestParam String gender,
-                                  @DateTimeFormat(pattern = "yyyy-MM-dd")
-                              @RequestParam LocalDate birthday){
+                              @RequestParam String birthday){
 
         Boolean result = patientInfoService.register(username, password, phone, email, idNumber, name, gender, birthday);
         if(result == Boolean.TRUE) {
@@ -56,7 +55,7 @@ public class PatientInfoController {
         return patientInfoService.login(username, password);
     }
 
-    // 根据患者名获取患者信息
+
     @ApiOperation("根据患者名获取患者信息")
     @GetMapping("/{patientName}")
     public CommonResult getByName(@PathVariable String patientName){
@@ -67,8 +66,18 @@ public class PatientInfoController {
         return CommonResult.success(patientDto);
     }
 
+    @ApiOperation("根据患者id获取患者信息")
+    @GetMapping("/id/{patientId}")
+    public CommonResult getById(@PathVariable Integer patientId){
+        PatientDto patientDto = patientInfoService.getById(patientId);
+        if(patientDto == null) {
+            return CommonResult.failed("查无此人");
+        }
+        return CommonResult.success(patientDto);
+    }
+
     @ApiOperation("修改患者信息")
-    @PostMapping("/update")
+    @PutMapping("/")
     public CommonResult updatePatientInfo(@RequestParam String username,
                                           @RequestParam String phone,
                                           @RequestParam String email,
@@ -87,7 +96,7 @@ public class PatientInfoController {
     }
 
     @ApiOperation("修改患者密码")
-    @PostMapping("/update/password")
+    @PutMapping("/password")
     public CommonResult updatePatientInfo(@RequestParam String username,
                                           @RequestParam String password){
         Boolean result = patientInfoService.updatePassword(username, password);
@@ -107,4 +116,10 @@ public class PatientInfoController {
         return patientInfoService.loadUserByUsername(username);
     }
 
+
+    @ApiOperation("根据患者名获取邮箱")
+    @PostMapping("/email")
+    public String getEmailByName(@RequestParam String username){
+        return patientInfoService.getEmailByName(username);
+    }
 }

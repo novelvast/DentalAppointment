@@ -30,11 +30,11 @@ public class AdminInfoController {
                                  @RequestParam String password,
                                  @RequestParam String phone,
                                  @RequestParam String email,
-                                 @RequestParam String hospital,
+                                 @RequestParam Integer hospitalId,
                                  @RequestParam String name,
                                  @RequestParam Integer jobNumber){
 
-        Boolean result = adminInfoService.register(username, password, phone, email,hospital, name, jobNumber);
+        Boolean result = adminInfoService.register(username, password, phone, email, hospitalId, name, jobNumber);
         if(result == Boolean.TRUE) {
             return CommonResult.success(null,"注册成功");
         }
@@ -63,14 +63,14 @@ public class AdminInfoController {
     }
 
     @ApiOperation("修改管理员信息")
-    @PostMapping("/update")
+    @PutMapping ("/")
     public CommonResult updatePatientInfo(@RequestParam String username,
                                           @RequestParam String phone,
                                           @RequestParam String email,
-                                          @RequestParam String hospital,
+                                          @RequestParam Integer hospitalId,
                                           @RequestParam String name,
                                           @RequestParam Integer jobNumber){
-        Boolean result = adminInfoService.updateInfo(username, phone, email, hospital, name, jobNumber);
+        Boolean result = adminInfoService.updateInfo(username, phone, email, hospitalId, name, jobNumber);
         if(result == Boolean.TRUE) {
             return CommonResult.success(null,"修改成功");
         }
@@ -81,7 +81,7 @@ public class AdminInfoController {
     }
 
     @ApiOperation("修改管理员密码")
-    @PostMapping("/update/password")
+    @PutMapping("/password")
     public CommonResult updatePatientInfo(@RequestParam String username,
                                           @RequestParam String password){
         Boolean result = adminInfoService.updatePassword(username, password);

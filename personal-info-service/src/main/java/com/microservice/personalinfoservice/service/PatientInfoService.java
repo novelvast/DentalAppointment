@@ -19,7 +19,7 @@ public interface PatientInfoService {
      * 患者注册
      */
     Boolean register(String username, String password, String phone, String email, String idNumber, String name,
-                     String gender, LocalDate birthday);
+                     String gender, String birthday);
 
     /**
      * 患者登陆
@@ -30,6 +30,11 @@ public interface PatientInfoService {
      * 根据患者名获取患者信息
      */
     PatientDto getByName(String username);
+
+    /**
+     * 根据患者id获取患者信息
+     */
+    PatientDto getById(Integer patientId);
 
     /**
      * 根据患者名获取患者所有信息
@@ -51,5 +56,11 @@ public interface PatientInfoService {
      * 获取用户名和密码，认证服务调用
      */
     UserDto loadUserByUsername(String username);
+
+    /**
+     * 获取邮箱，消息服务调用
+     */
+    String getEmailByName(String username);
+
 
 }

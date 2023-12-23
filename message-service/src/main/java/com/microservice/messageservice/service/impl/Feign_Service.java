@@ -4,12 +4,12 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name="personal-info-service",path="/api")
+@FeignClient(name="personal-info-service")
 public interface Feign_Service {
 
-    @PostMapping("/send1")
+    @PostMapping("api/patient/email")
     String get_email_doctor(@RequestParam String username);
 
-    @PostMapping("/send2")
+    @PostMapping("api/doctor/email")
     String get_email_patient(@RequestParam String username);
 }

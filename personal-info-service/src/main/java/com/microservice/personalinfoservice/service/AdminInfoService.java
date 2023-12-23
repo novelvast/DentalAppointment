@@ -18,7 +18,7 @@ public interface AdminInfoService {
     /**
      * 管理员注册
      */
-    Boolean register(String username, String password, String phone, String email, String hospital, String name,
+    Boolean register(String username, String password, String phone, String email, Integer hospitalId, String name,
                      Integer jobNumber);
 
     /**
@@ -27,7 +27,7 @@ public interface AdminInfoService {
     CommonResult login(String username, String password);
 
     /**
-     * 根据管理员名获取患者信息
+     * 根据管理员名获取管理员信息
      */
     AdminDto getByName(String username);
 
@@ -39,7 +39,7 @@ public interface AdminInfoService {
     /**
      * 修改管理员信息
      */
-    Boolean updateInfo(String username, String phone, String email, String hospital, String name, Integer jobNumber);
+    Boolean updateInfo(String username, String phone, String email, Integer hospitalId, String name, Integer jobNumber);
 
     /**
      * 修改管理员密码

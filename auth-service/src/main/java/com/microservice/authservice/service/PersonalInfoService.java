@@ -14,7 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Service
 @FeignClient("personal-info-service")
-public interface PatientInfoService {
+public interface PersonalInfoService {
     @GetMapping("/api/patient/loadByUsername")
-    UserDto loadUserByUsername(@RequestParam String username);
+    UserDto loadPatientByUsername(@RequestParam String username);
+
+    @GetMapping("/api/doctor/loadByUsername")
+    UserDto loadDoctorByUsername(@RequestParam String username);
+
+    @GetMapping("/api/admin/loadByUsername")
+    UserDto loadAdminByUsername(@RequestParam String username);
 }

@@ -20,13 +20,15 @@ import java.io.Serializable;
 public class DoctorDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Integer id;
+
     private String username;
 
     private String phone;
 
     private String email;
 
-    private String hospital;
+    private Integer hospitalId;
 
     private String name;
 

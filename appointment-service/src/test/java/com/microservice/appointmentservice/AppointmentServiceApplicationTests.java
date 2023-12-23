@@ -40,16 +40,11 @@ class AppointmentServiceApplicationTests {
     private static final Integer EXPIRE_TIME_SECONDS = 24 * 60 * 60; // 24 小时
     @Test
     void getCancelCount() {
-        Integer orderId = 14;
-        // 查询对应order的用户
-        OrderInfo orderInfo = orderInfoMapper.selectById(orderId);
-        String patientId = orderInfo.getPatientId();
-        String currentDate = LocalDate.now().toString();
-
-        HashOperations<String, String, String> hashOperations = stringRedisTemplate.opsForHash();
-
-        System.out.println(hashOperations.get(CANCEL_COUNT_KEY_PREFIX + patientId , currentDate));
-
+        OrderInfo orderInfo=new OrderInfo();
+        orderInfo.setApprovalStatus("待审核");
+        orderInfoMapper.insert(orderInfo);
+        orderInfo.setHospital("tongji");
+        System.out.println(orderInfo.getId());
     }
     @Test
     void patientCancel() {
@@ -83,7 +78,7 @@ class AppointmentServiceApplicationTests {
 
     @Test
     void appointmentMQ(){
-        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_TOPIC_RESERVATION, RabbitMQConfig.ROUTING_KEY_APPROVAL, "ok");
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_TOPIC_RESERVATION, RabbitMQConfig.ROUTING_KEY_APPROVAL, "{'orderId':34,'adminUsername':'ly','cancelReason':'单日多次预约','auditStatus':null,'kind':'医生','Username':'patient789'}");
     }
 
 }

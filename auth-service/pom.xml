@@ -26,6 +26,17 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.microservice</groupId>
+            <artifactId>common</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-amqp</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!--导⼊spring cloud oauth2依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
