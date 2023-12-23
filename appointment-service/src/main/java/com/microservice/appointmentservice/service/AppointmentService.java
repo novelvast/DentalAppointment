@@ -24,4 +24,8 @@ public interface AppointmentService {
     AppointmentDto getAppointmentById(Integer id);
     void changeApprovalStatus(Integer orderId,String status);
     void deleteAppointmentById(Integer id);
+
+    void addTOManage(AppointmentDto appointmentDto);
+
+    void deleteTOManage(AppointmentDto appointmentDto);
 }

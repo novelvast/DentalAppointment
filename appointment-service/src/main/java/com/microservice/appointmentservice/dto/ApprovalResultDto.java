@@ -14,4 +14,5 @@ public class ApprovalResultDto {
     private String cancelReason;
     private String auditStatus;
     private String username;
+    private String kind;
 }

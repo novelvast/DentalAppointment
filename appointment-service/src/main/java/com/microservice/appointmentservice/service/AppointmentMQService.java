@@ -20,7 +20,9 @@ public class AppointmentMQService {
     @Autowired
     private AppointmentService appointmentService;
     //无需审核，直接发送消息给管理微服务修改数据库
-    public void appointmentIsOk(){
+    public void sendToManage(String info){
+        //医院id、就诊时间、医生id、用户id、病情描述。
+        //医生id、用户id、就诊时间
         rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_TOPIC_RESERVATION, RabbitMQConfig.ROUTING_KEY_MANAGEMENT, "ok");
     }
 
@@ -45,8 +47,10 @@ public class AppointmentMQService {
                 AppointmentDto appointmentDto = appointmentService.getAppointmentById(approvalResultDto.getOrderId());
                 if (appointmentDto.getApprovalStatus().equals("预约待审核")) {
                     //预约审核通过
-                    if (approvalResultDto.getAuditStatus().equals("审核通过"))
+                    if (approvalResultDto.getAuditStatus().equals("审核通过")) {
                         appointmentService.changeApprovalStatus(approvalResultDto.getOrderId(), "预约审核通过");
+                        appointmentService.addTOManage(appointmentService.getAppointmentById(approvalResultDto.getOrderId()));
+                    }
                     else
                         appointmentService.changeApprovalStatus(approvalResultDto.getOrderId(), "预约审核不通过");
                 }
@@ -55,6 +59,7 @@ public class AppointmentMQService {
                     if (approvalResultDto.getAuditStatus().equals("审核通过")) {
                         appointmentService.changeApprovalStatus(approvalResultDto.getOrderId(), "取消审核通过");
                         appointmentService.deleteAppointmentById(approvalResultDto.getOrderId());
+                        appointmentService.deleteTOManage(appointmentService.getAppointmentById(approvalResultDto.getOrderId()));
                     } else
                         appointmentService.changeApprovalStatus(approvalResultDto.getOrderId(), "取消审核不通过");
                 }
