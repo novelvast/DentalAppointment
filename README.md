@@ -28,9 +28,35 @@ redis地址：http://47.115.205.56:6379
 
 
 
+rabbitmq
+
+http://47.115.205.56:5672/
+
+管理界面：http://47.115.205.56:15672/
+
+用户名：rabbitmq
+
+密码：microservice
 
 
 
+sentinel
+
+管理界面：http://47.115.205.56:8858/
+
+用户名：sentinel
+
+密码：sentinel
+
+
+
+jenkins
+
+管理界面：http://47.117.145.92:8081/
+
+用户名：admin
+
+密码：microservice
 
 
 
@@ -61,11 +87,11 @@ redis地址：http://47.115.205.56:6379
 | Spring Boot          | 容器+MVC框架          | 2.3.12.RELEASE           |
 | JDK                  |                       | 1.8                      |
 | Nacos                | 服务注册发现+配置中心 | 2.1.0                    |
-| Sentinel             | 服务熔断与限流        | 1.8.5                    |
+| Sentinel             | 服务熔断与限流        | 1.8.0                    |
 | Seata                | 分布式事务            | 1.5.2                    |
-| RocketMQ             | 消息队列              | 4.9.4                    |
+| RabbitMQ             | 消息队列              | 3.7.14                   |
 | MyBatis-plus         | 数据库代码生成        | 3.2.0                    |
-| MySQL                | 数据库                |                          |
+| MySQL                | 数据库                | 5.7                      |
 | Redis                | 缓存数据库            | 7.0.12                   |
 |                      |                       |                          |
 |                      |                       |                          |
@@ -96,6 +122,7 @@ redis地址：http://47.115.205.56:6379
 - [x] 整合oauth2+jwt实现鉴权
 - [x] 整合gateway实现网关服务
 - [ ] 整合sentinel
+- [ ] 整合seata
 - [ ] 不要明文密码
 - [ ] mybatis-generator共用
 - [ ] 验证码
