@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name="personal-info-service")
 public interface Feign_Service {
 
-    @PostMapping("api/patient/email")
+    @PostMapping("api/doctor/email")
     String get_email_doctor(@RequestParam String username);
 
-    @PostMapping("api/doctor/email")
+    @PostMapping("api/patient/email")
     String get_email_patient(@RequestParam String username);
 }
