@@ -65,7 +65,7 @@ public class DoctorInfoController {
     }
 
     @ApiOperation("修改医生信息")
-    @PutMapping("/")
+    @PutMapping("")
     public CommonResult updatePatientInfo(@RequestParam String username,
                                           @RequestParam String phone,
                                           @RequestParam String email,

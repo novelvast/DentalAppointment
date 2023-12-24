@@ -29,7 +29,7 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 
     @Override
     public Boolean register(String username, String password, String phone, String email, String idNumber,
-                            String name, String gender, String birthday) {
+                            String name, String gender, LocalDate birthday) {
 
         // 查询是否已有该用户
         if (getByName(username) != null){
@@ -106,7 +106,7 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 
     @Override
     public Boolean updateInfo(String username, String phone, String email, String IDNumber, String name,
-                              String gender, String birthday) {
+                              String gender, LocalDate birthday) {
         UpdateWrapper<PatientInfo> patientInfoUpdateWrapper = new UpdateWrapper<>();
         patientInfoUpdateWrapper.eq("username",username)
                 .set("phone", phone)

@@ -1,6 +1,7 @@
 package com.microservice.personalinfoservice.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import lombok.Data;
@@ -13,7 +14,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Zhao
- * @since 2023-12-23
+ * @since 2023-12-24
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -39,7 +40,7 @@ public class PatientInfo implements Serializable {
 
     private String gender;
 
-    private String birthday;
+    private LocalDate birthday;
 
 
 }
