@@ -1,9 +1,13 @@
 package com.microservice.hospitalmanageservice.controller;
 
 import com.microservice.common.api.CommonResult;
+import com.microservice.hospitalmanageservice.entity.vo.HospitalVo;
 import com.microservice.hospitalmanageservice.service.IHospitalService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -24,5 +28,10 @@ public class HospitalController {
         // TODO: 从自己数据库取医院信息
         log.info("{}", hospitalId);
         return CommonResult.success(hospitalService.getById(hospitalId));
+    }
+    @GetMapping("/{hospitalId}/administrator")
+    public CommonResult getHospitalAdministrator(@PathVariable String hospitalId){
+        HospitalVo administrator = hospitalService.getAdministrator(hospitalId);
+        return CommonResult.success(administrator);
     }
 }

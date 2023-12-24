@@ -1,8 +1,8 @@
 package com.microservice.hospitalmanageservice.controller;
 
 import com.microservice.common.api.CommonResult;
-import com.microservice.hospitalmanageservice.service.IKpiService;
 import com.microservice.hospitalmanageservice.entity.vo.KpiVo;
+import com.microservice.hospitalmanageservice.service.IKpiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

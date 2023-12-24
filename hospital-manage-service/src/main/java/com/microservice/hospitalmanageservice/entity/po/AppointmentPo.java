@@ -1,4 +1,4 @@
-package com.microservice.hospitalmanageservice.entity.dto;
+package com.microservice.hospitalmanageservice.entity.po;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,9 +8,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class AppointmentDto {
+@AllArgsConstructor
+public class AppointmentPo {
     private Integer patientId;
     private Integer doctorId;
     private LocalDateTime appointmentDateTime;
@@ -18,5 +18,5 @@ public class AppointmentDto {
     private LocalDate patientBirth;
     private String patientName;
     private String patientCondition;
+    private Short status;
 }
-

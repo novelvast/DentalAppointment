@@ -4,19 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AppointmentDto {
-    private Integer patientId;
+public class AppointmentDto1{
     private Integer doctorId;
-    private LocalDateTime appointmentDateTime;
-    private Short patientGender;
-    private LocalDate patientBirth;
+    private String patientId;
+    private String dept;
     private String patientName;
-    private String patientCondition;
+    private Integer patientGender;
+    private Integer patientAge;
+    private LocalDateTime treatmentTime;
+    private String conditionDescription;
 }
-

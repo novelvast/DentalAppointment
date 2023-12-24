@@ -5,7 +5,7 @@ import com.microservice.appointmentservice.pojo.BookRequest;
 import com.microservice.appointmentservice.pojo.BookResponse;
 import com.microservice.appointmentservice.service.AppointmentService;
 import com.microservice.common.api.CommonResult;
-import com.sun.xml.internal.bind.v2.TODO;
+
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;

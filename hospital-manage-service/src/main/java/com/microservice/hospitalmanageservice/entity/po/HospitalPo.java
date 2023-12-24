@@ -18,4 +18,5 @@ public class HospitalPo {
     private String position;
     private String introduction;
     private String photo;
+    private Integer administrator;
 }

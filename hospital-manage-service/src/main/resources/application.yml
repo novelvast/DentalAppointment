@@ -1,5 +1,7 @@
 server:
   port: 8401
+  servlet:
+    context-path: /api/hospital
 spring:
   application:
     name: hospital-manage-service
@@ -9,12 +11,73 @@ spring:
         server-addr: 47.115.205.56:8848
         username: nacos
         password: microservice
+    sentinel:
+      transport:
+        dashboard: localhost:8090
+        port: 8719
+      http-method-specify: true #开启请求方式前缀
+      eager: true #饥饿加载
+      filter:
+        url-patterns: /**
   rabbitmq:
     host: 47.115.205.56
     port: 5672
     username: rabbitmq
     password: microservice
     virtualHost: /
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://rm-cn-pe33ibr74001zlgo.rwlb.rds.aliyuncs.com:3306/hospital_manage?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: Tongji123
+
+# 外部api
+api:
+  his1:
+    base-url: http://8.130.167.87:8081/api/his1
+    doctors:
+      all: ${api.his1.base-url}/doctors
+      getById: ${api.his1.base-url}/doctors/byID/{0}
+    kpi:
+      byDoctorId: ${api.his1.base-url}/KPI/{0}
+
+      byDoctorIdAndMonth: ${api.his1.base-url}/KPI/{0}/month/{1}
+    case:
+      byPatientId: ${api.his1.base-url}/cases/{0}
+    appointment:
+      byDoctorIdAndDay: ${api.his1.base-url}/appointments/{0}
+      deleteById: ${api.his1.base-url}/appointments/{0}
+      add: ${api.his1.base-url}/appointments
+  his2:
+    base-url: http://8.130.167.87:8080/api/his2
+    doctors:
+      all: ${api.his2.base-url}/doctors
+      getById: ${api.his2.base-url}/doctors/{0}
+    kpi:
+      byDoctorId: ${api.his2.base-url}/kpis/{0}
+      byDoctorIdAndDay: ${api.his2.base-url}/kpis/{0}/day/{1}
+      byDoctorIdAndMonth: ${api.his2.base-url}/kpis/{0}/month/{1}
+    case:
+      byPatientId: ${api.his2.base-url}/patientCases/patientId/{0}
+    appointment:
+      byDoctorIdAndDay: ${api.his2.base-url}/appointments/byDoctor/{0}
+      deleteById: ${api.his2.base-url}/appointments/{0}
+      add: ${api.his2.base-url}/appointments
+  his3:
+    base-url: http://8.130.167.87:8082/api/his3
+    doctors:
+      all: ${api.his3.base-url}/doctors
+      getById: ${api.his3.base-url}/doctors/{0}
+    kpi:
+
+      byDoctorIdAndDay: ${api.his3.base-url}/kpis/byDay/{0}/{1}
+      byDoctorIdAndMonth: ${api.his3.base-url}/kpis/byMonth/{0}/{1}
+    case:
+      byPatientId: ${api.his3.base-url}/cases/byPatientId/{0}
+    appointment:
+      byDoctorIdAndDay: ${api.his3.base-url}/appointments/{0}/{1}
+      deleteById: ${api.his3.base-url}/appointments/{0}
+      add: ${api.his3.base-url}/appointments
 
 
 
