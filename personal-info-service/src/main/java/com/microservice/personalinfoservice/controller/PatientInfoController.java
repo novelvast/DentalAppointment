@@ -36,7 +36,8 @@ public class PatientInfoController {
                               @RequestParam String idNumber,
                               @RequestParam String name,
                               @RequestParam String gender,
-                              @RequestParam String birthday){
+                                 @DateTimeFormat(pattern = "yyyy-MM-dd")
+                              @RequestParam LocalDate birthday){
 
         Boolean result = patientInfoService.register(username, password, phone, email, idNumber, name, gender, birthday);
         if(result == Boolean.TRUE) {
@@ -77,14 +78,15 @@ public class PatientInfoController {
     }
 
     @ApiOperation("修改患者信息")
-    @PutMapping("/")
+    @PutMapping("")
     public CommonResult updatePatientInfo(@RequestParam String username,
                                           @RequestParam String phone,
                                           @RequestParam String email,
                                           @RequestParam String IDNumber,
                                           @RequestParam String name,
                                           @RequestParam String gender,
-                                          @RequestParam String birthday){
+                                            @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                          @RequestParam LocalDate birthday){
         Boolean result = patientInfoService.updateInfo(username, phone, email, IDNumber, name, gender, birthday);
         if(result == Boolean.TRUE) {
             return CommonResult.success(null,"修改成功");

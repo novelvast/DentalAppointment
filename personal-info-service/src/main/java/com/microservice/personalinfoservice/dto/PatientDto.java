@@ -36,7 +36,7 @@ public class PatientDto implements Serializable {
 
     private String gender;
 
-    private String birthday;
+    private LocalDate birthday;
 
 
 }

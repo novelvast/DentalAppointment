@@ -19,7 +19,7 @@ public interface PatientInfoService {
      * 患者注册
      */
     Boolean register(String username, String password, String phone, String email, String idNumber, String name,
-                     String gender, String birthday);
+                     String gender, LocalDate birthday);
 
     /**
      * 患者登陆
@@ -45,7 +45,7 @@ public interface PatientInfoService {
      * 修改患者信息
      */
     Boolean updateInfo(String username, String phone, String email, String IDNumber, String name,
-                       String gender, String birthday);
+                       String gender, LocalDate birthday);
 
     /**
      * 修改患者密码

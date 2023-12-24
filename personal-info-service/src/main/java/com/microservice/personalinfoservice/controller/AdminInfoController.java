@@ -63,7 +63,7 @@ public class AdminInfoController {
     }
 
     @ApiOperation("修改管理员信息")
-    @PutMapping ("/")
+    @PutMapping ("")
     public CommonResult updatePatientInfo(@RequestParam String username,
                                           @RequestParam String phone,
                                           @RequestParam String email,
