@@ -3,6 +3,7 @@ package com.microservice.personalinfoservice.controller;
 import com.microservice.common.api.CommonResult;
 import com.microservice.common.domain.UserDto;
 import com.microservice.personalinfoservice.dto.DoctorDto;
+import com.microservice.personalinfoservice.dto.PatientDto;
 import com.microservice.personalinfoservice.service.DoctorInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,11 +32,11 @@ public class DoctorInfoController {
                                  @RequestParam String password,
                                  @RequestParam String phone,
                                  @RequestParam String email,
-                                 @RequestParam String hospital,
+                                 @RequestParam Integer hospitalId,
                                  @RequestParam String name,
                                  @RequestParam Integer jobNumber){
 
-        Boolean result = doctorInfoService.register(username, password, phone, email,hospital, name, jobNumber);
+        Boolean result = doctorInfoService.register(username, password, phone, email, hospitalId, name, jobNumber);
         if(result == Boolean.TRUE) {
             return CommonResult.success(null,"注册成功");
         }
@@ -64,14 +65,14 @@ public class DoctorInfoController {
     }
 
     @ApiOperation("修改医生信息")
-    @PostMapping("/update")
+    @PutMapping("")
     public CommonResult updatePatientInfo(@RequestParam String username,
                                           @RequestParam String phone,
                                           @RequestParam String email,
-                                          @RequestParam String hospital,
+                                          @RequestParam Integer hospitalId,
                                           @RequestParam String name,
                                           @RequestParam Integer jobNumber){
-        Boolean result = doctorInfoService.updateInfo(username, phone, email, hospital, name, jobNumber);
+        Boolean result = doctorInfoService.updateInfo(username, phone, email, hospitalId, name, jobNumber);
         if(result == Boolean.TRUE) {
             return CommonResult.success(null,"修改成功");
         }
@@ -82,7 +83,7 @@ public class DoctorInfoController {
     }
 
     @ApiOperation("修改医生密码")
-    @PostMapping("/update/password")
+    @PutMapping("/password")
     public CommonResult updatePatientInfo(@RequestParam String username,
                                           @RequestParam String password){
         Boolean result = doctorInfoService.updatePassword(username, password);
@@ -95,10 +96,25 @@ public class DoctorInfoController {
 
     }
 
+    @ApiOperation("根据医生id获取医生信息")
+    @GetMapping("/id/{doctorId}")
+    public CommonResult getById(@PathVariable Integer doctorId){
+        DoctorDto doctorDto = doctorInfoService.getById(doctorId);
+        if(doctorDto == null) {
+            return CommonResult.failed("查无此人");
+        }
+        return CommonResult.success(doctorDto);
+    }
 
     @ApiOperation("根据医生名获取认证信息")
     @GetMapping("/loadByUsername")
     public UserDto loadUserByUsername(@RequestParam String username){
         return doctorInfoService.loadUserByUsername(username);
+    }
+
+    @ApiOperation("根据医生名获取邮箱")
+    @PostMapping("/email")
+    public String getEmailByName(@RequestParam String username){
+        return doctorInfoService.getEmailByName(username);
     }
 }

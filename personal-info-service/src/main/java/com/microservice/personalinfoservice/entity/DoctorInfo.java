@@ -1,11 +1,10 @@
 package com.microservice.personalinfoservice.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -14,16 +13,17 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Zhao
- * @since 2023-12-05
+ * @since 2023-12-23
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@NoArgsConstructor
-@AllArgsConstructor
 public class DoctorInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     private String username;
 
@@ -33,7 +33,7 @@ public class DoctorInfo implements Serializable {
 
     private String email;
 
-    private String hospital;
+    private Integer hospitalId;
 
     private String name;
 

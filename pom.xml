@@ -12,6 +12,8 @@
     <modules>
         <module>common</module>
         <module>personal-info-service</module>
+        <module>message-service</module>
+        <module>auth-service</module>
     </modules>
 
     <parent>

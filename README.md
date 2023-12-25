@@ -50,6 +50,16 @@ sentinel
 
 
 
+seata
+
+http://121.43.108.102:7091
+
+用户名：seata
+
+密码：seata
+
+
+
 jenkins
 
 管理界面：http://47.117.145.92:8081/

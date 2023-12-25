@@ -32,6 +32,11 @@ public interface PatientInfoService {
     PatientDto getByName(String username);
 
     /**
+     * 根据患者id获取患者信息
+     */
+    PatientDto getById(Integer patientId);
+
+    /**
      * 根据患者名获取患者所有信息
      */
     PatientInfo getAllInfoByName(String username);
@@ -40,7 +45,7 @@ public interface PatientInfoService {
      * 修改患者信息
      */
     Boolean updateInfo(String username, String phone, String email, String IDNumber, String name,
-                       String gender, String birthday);
+                       String gender, LocalDate birthday);
 
     /**
      * 修改患者密码
@@ -51,5 +56,11 @@ public interface PatientInfoService {
      * 获取用户名和密码，认证服务调用
      */
     UserDto loadUserByUsername(String username);
+
+    /**
+     * 获取邮箱，消息服务调用
+     */
+    String getEmailByName(String username);
+
 
 }

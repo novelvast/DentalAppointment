@@ -18,7 +18,7 @@ public interface DoctorInfoService {
     /**
      * 医生注册
      */
-    Boolean register(String username, String password, String phone, String email, String hospital, String name,
+    Boolean register(String username, String password, String phone, String email, Integer hospitalId, String name,
                      Integer jobNumber);
 
     /**
@@ -27,9 +27,14 @@ public interface DoctorInfoService {
     CommonResult login(String username, String password);
 
     /**
-     * 根据医生名获取患者信息
+     * 根据医生名获取医生信息
      */
     DoctorDto getByName(String username);
+
+    /**
+     * 根据医生id获取医生信息
+     */
+    DoctorDto getById(Integer doctorId);
 
     /**
      * 根据医生名获取医生所有信息
@@ -39,7 +44,7 @@ public interface DoctorInfoService {
     /**
      * 修改医生信息
      */
-    Boolean updateInfo(String username, String phone, String email, String hospital, String name, Integer jobNumber);
+    Boolean updateInfo(String username, String phone, String email, Integer hospitalId, String name, Integer jobNumber);
 
     /**
      * 修改医生密码
@@ -50,5 +55,10 @@ public interface DoctorInfoService {
      * 获取用户名和密码，认证服务调用
      */
     UserDto loadUserByUsername(String username);
+
+    /**
+     * 获取邮箱，消息服务调用
+     */
+    String getEmailByName(String username);
 }
 

@@ -6,17 +6,19 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.microservice.common.api.CommonResult;
 import com.microservice.common.domain.UserDto;
+import com.microservice.personalinfoservice.dto.DoctorCheckDto;
 import com.microservice.personalinfoservice.dto.DoctorDto;
 import com.microservice.personalinfoservice.entity.DoctorInfo;
-import com.microservice.personalinfoservice.entity.PatientInfo;
 import com.microservice.personalinfoservice.mapper.DoctorInfoMapper;
 import com.microservice.personalinfoservice.service.AuthService;
 import com.microservice.personalinfoservice.service.DoctorInfoService;
+import com.microservice.personalinfoservice.service.HospitalManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class DoctorInfoServiceImpl implements DoctorInfoService {
@@ -27,19 +29,33 @@ public class DoctorInfoServiceImpl implements DoctorInfoService {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private HospitalManageService hospitalManageService;
+
     @Override
-    public Boolean register(String username, String password, String phone, String email, String hospital,
+    public Boolean register(String username, String password, String phone, String email, Integer hospitalId,
                             String name, Integer jobNumber) {
         // 查询是否已有该用户
-        if (getByName(username) == null){
+        if (getByName(username) != null){
             return Boolean.FALSE;
         }
 
-        // TODO 调用hospital-manage判断医生工号
+        // 调用hospital-manage判断医生工号
+        CommonResult<DoctorCheckDto> commonResult = hospitalManageService.getDoctorName(hospitalId, jobNumber);
+        if(!Objects.equals(commonResult.getData().getName(), name)) {
+            return Boolean.FALSE;
+        }
 
         // 没有对该用户进行添加操作
-        int result = doctorInfoMapper.insert(new DoctorInfo(username, password, phone, email, hospital,
-                name, jobNumber));
+        DoctorInfo doctorInfo = new DoctorInfo();
+        doctorInfo.setUsername(username);
+        doctorInfo.setPassword(password);
+        doctorInfo.setPhone(phone);
+        doctorInfo.setEmail(email);
+        doctorInfo.setHospitalId(hospitalId);
+        doctorInfo.setName(name);
+        doctorInfo.setJobNumber(jobNumber);
+        int result = doctorInfoMapper.insert(doctorInfo);
         if(result == 1){
             return Boolean.TRUE;
         }
@@ -75,6 +91,18 @@ public class DoctorInfoServiceImpl implements DoctorInfoService {
     }
 
     @Override
+    public DoctorDto getById(Integer doctorId) {
+        DoctorInfo doctorInfo = doctorInfoMapper.selectById(doctorId);
+
+        if(doctorInfo != null) {
+            DoctorDto doctorDto = new DoctorDto();
+            BeanUtil.copyProperties(doctorInfo, doctorDto);
+            return doctorDto;
+        }
+        return null;
+    }
+
+    @Override
     public DoctorInfo getAllInfoByName(String username) {
         QueryWrapper<DoctorInfo> doctorInfoQueryWrapper = new QueryWrapper<>();
         doctorInfoQueryWrapper.eq("username", username);
@@ -83,13 +111,13 @@ public class DoctorInfoServiceImpl implements DoctorInfoService {
     }
 
     @Override
-    public Boolean updateInfo(String username, String phone, String email, String hospital, String name,
+    public Boolean updateInfo(String username, String phone, String email, Integer hospitalId, String name,
                               Integer jobNumber) {
         UpdateWrapper<DoctorInfo> doctorInfoUpdateWrapper = new UpdateWrapper<>();
         doctorInfoUpdateWrapper.eq("username",username)
                 .set("phone", phone)
                 .set("email", email)
-                .set("hospital", hospital)
+                .set("hospitalId", hospitalId)
                 .set("name", name)
                 .set("jobNumber", jobNumber);
 
@@ -127,6 +155,16 @@ public class DoctorInfoServiceImpl implements DoctorInfoService {
             UserDto userDto = new UserDto();
             BeanUtil.copyProperties(doctorInfo, userDto);
             return userDto;
+        }
+        return null;
+    }
+
+    @Override
+    public String getEmailByName(String username) {
+        DoctorInfo doctorInfo = getAllInfoByName(username);
+
+        if(doctorInfo != null) {
+            return doctorInfo.getEmail();
         }
         return null;
     }

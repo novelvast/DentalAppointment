@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController()
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/approval")
 public class ApprovalController {
     @Autowired
