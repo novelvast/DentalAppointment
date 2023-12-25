@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Api(tags = "AdminInfoController", description = "管理员信息管理")
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/admin")
 public class AdminInfoController {
     @Autowired

@@ -42,6 +42,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     public AppointmentDto getAppointmentById(Integer id){
         OrderInfo orderInfo=orderInfoMapper.selectById(id);
         AppointmentDto dto = new AppointmentDto();
+        dto.setId(orderInfo.getId());
         dto.setPatientId(orderInfo.getPatientId());
         dto.setDoctorId(orderInfo.getDoctorId());
         dto.setOrderTime(orderInfo.getOrderTime());
@@ -141,6 +142,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         List<AppointmentDto> result = new ArrayList<>();
         for (OrderInfo orderInfo : orderInfos) {
             AppointmentDto dto = new AppointmentDto();
+            dto.setId(orderInfo.getId());
             dto.setPatientId(orderInfo.getPatientId());
             dto.setDoctorId(orderInfo.getDoctorId());
             dto.setOrderTime(orderInfo.getOrderTime());
@@ -162,6 +164,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         List<AppointmentDto> result = new ArrayList<>();
         for (OrderInfo orderInfo : orderInfos) {
             AppointmentDto dto = new AppointmentDto();
+            dto.setId(orderInfo.getId());
             dto.setPatientId(orderInfo.getPatientId());
             dto.setDoctorId(orderInfo.getDoctorId());
             dto.setOrderTime(orderInfo.getOrderTime());

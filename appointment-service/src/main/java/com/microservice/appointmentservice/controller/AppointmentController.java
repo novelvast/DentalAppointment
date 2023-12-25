@@ -2,16 +2,12 @@ package com.microservice.appointmentservice.controller;
 
 import com.microservice.appointmentservice.dto.AppointmentDto;
 import com.microservice.appointmentservice.pojo.BookRequest;
-import com.microservice.appointmentservice.pojo.BookResponse;
 import com.microservice.appointmentservice.service.AppointmentService;
 import com.microservice.common.api.CommonResult;
-
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController

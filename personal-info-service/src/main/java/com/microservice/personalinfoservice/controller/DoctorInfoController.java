@@ -20,6 +20,7 @@ import java.time.LocalDate;
  */
 @Api(tags = "DoctorInfoController", description = "医生信息管理")
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/doctor")
 public class DoctorInfoController {
 
