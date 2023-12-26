@@ -70,8 +70,8 @@ public class DoctorInfoServiceImpl implements DoctorInfoService {
             return CommonResult.failed("用户名或密码不能为空！");
         }
         Map<String, String> params = new HashMap<>();
-        params.put("client_id", "client_patient");
-        params.put("client_secret","patient");
+        params.put("client_id", "client_doctor");
+        params.put("client_secret","doctor");
         params.put("grant_type","password");
         params.put("username",username);
         params.put("password",password);

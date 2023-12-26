@@ -59,8 +59,8 @@ public class AdminInfoServiceImpl implements AdminInfoService {
             return CommonResult.failed("用户名或密码不能为空！");
         }
         Map<String, String> params = new HashMap<>();
-        params.put("client_id", "client_patient");
-        params.put("client_secret","patient");
+        params.put("client_id", "client_admin");
+        params.put("client_secret","admin");
         params.put("grant_type","password");
         params.put("username",username);
         params.put("password",password);
