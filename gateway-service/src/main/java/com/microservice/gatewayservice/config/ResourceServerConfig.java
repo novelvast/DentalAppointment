@@ -1,10 +1,12 @@
 package com.microservice.gatewayservice.config;
 
 import cn.hutool.core.util.ArrayUtil;
+import com.microservice.gatewayservice.authorization.AuthorizationManager;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -27,7 +29,7 @@ import reactor.core.publisher.Mono;
 @Configuration
 @EnableWebFluxSecurity
 public class ResourceServerConfig {
-//    private final AuthorizationManager authorizationManager;
+    private final AuthorizationManager authorizationManager;
 //    private final IgnoreUrlsConfig ignoreUrlsConfig;
 //    private final RestfulAccessDeniedHandler restfulAccessDeniedHandler;
 //    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
@@ -43,9 +45,9 @@ public class ResourceServerConfig {
 //                .accessDeniedHandler(restfulAccessDeniedHandler)//处理未授权
 //                .authenticationEntryPoint(restAuthenticationEntryPoint)//处理未认证
 
-                .pathMatchers("/login").permitAll()//白名单配置
-                .pathMatchers("/register").permitAll()//白名单配置
-                .anyExchange().authenticated()    // 所有请求认证
+                .pathMatchers("/**/login", "/**/register").permitAll()//白名单配置
+                .pathMatchers(HttpMethod.OPTIONS).permitAll() //option 请求默认放行
+                .anyExchange().access(authorizationManager)    // 所有请求认证
                 .and().csrf().disable();
         return http.build();
     }

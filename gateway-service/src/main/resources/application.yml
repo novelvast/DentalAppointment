@@ -1,9 +1,6 @@
 server:
   port: 9201
 
-service-url:
-  personal-info-service: http://localhost:8101
-  appointment-service: http://localhost:8201
 spring:
 #  main:
 #    web-application-type: reactive
@@ -19,20 +16,61 @@ spring:
     gateway:
       routes:
         - id: patient-info
-          uri: ${service-url.personal-info-service}
+          uri: lb://personal-info-service
           predicates:
             - Path=/patient-info/**
           filters:
             - StripPrefix=1
             - PrefixPath=/api/patient
 
+        - id: doctor-info
+          uri: lb://personal-info-service
+          predicates:
+            - Path=/doctor-info/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/api/doctor
+
+        - id: admin-info
+          uri: lb://admin-info-service
+          predicates:
+            - Path=/admin-info/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/api/admin
+
         - id: appointment-service
-          uri: ${service-url.appointment-service}
+          uri: lb://appointment-service
           predicates:
             - Path=/appointment/**
           filters:
             - StripPrefix=1
             - PrefixPath=/api/appointment
+
+        - id: approval-service
+          uri: lb://approval-service
+          predicates:
+            - Path=/approval/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/api/approval
+
+        - id: message-service
+          uri: lb://message-service
+          predicates:
+            - Path=/message/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/api/message
+
+        - id: hospital-manage-service
+          uri: lb://hospital-manage-service
+          predicates:
+            - Path=/hospital-manage/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/api/hospital-manage
+
 
   security:
     oauth2:
