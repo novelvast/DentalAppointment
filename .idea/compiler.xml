@@ -13,12 +13,10 @@
         <module name="personal-info-service" />
         <module name="appointment-service" />
         <module name="gateway-service" />
+        <module name="approval-service" />
+        <module name="message-service" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="approval-service" target="1.8" />
-      <module name="message-service" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -29,7 +27,7 @@
       <module name="dental-appointment" options="" />
       <module name="gateway-service" options="-parameters" />
       <module name="hospital-manage-service" options="-parameters" />
-      <module name="message-service" options="" />
+      <module name="message-service" options="-parameters" />
       <module name="personal-info-service" options="-parameters" />
     </option>
   </component>

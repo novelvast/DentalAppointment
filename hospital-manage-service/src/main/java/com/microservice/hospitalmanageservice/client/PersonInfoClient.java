@@ -10,6 +10,6 @@ public interface PersonInfoClient {
     @GetMapping("/api/doctor/id/{doctorId}")
     CommonResult getDoctorById(@PathVariable Integer doctorId);
 
-    @GetMapping("/api/patient/id/{patientId}")
-    CommonResult getPatientById(@PathVariable Integer patientId);
+    @GetMapping("/api/patient/{patientName}")
+    CommonResult getPatientById(@PathVariable String patientName);
 }

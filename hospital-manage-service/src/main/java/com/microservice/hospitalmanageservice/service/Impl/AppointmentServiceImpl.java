@@ -56,8 +56,8 @@ public class AppointmentServiceImpl implements IAppointmentService {
     @Override
     public void add(String hospitalId, AppointmentDto appointmentDto) {
         //TODO：根据病人的id调用病人的详细信息
-        CommonResult patient = personInfoClient.getPatientById(appointmentDto.getPatientId());
-        CommonResult doctor = personInfoClient.getDoctorById(appointmentDto.getDoctorId());
+        CommonResult patient = personInfoClient.getPatientById(appointmentDto.getUserName());
+        CommonResult doctor = personInfoClient.getDoctorById(Integer.valueOf(appointmentDto.getDoctorId()));
         PatientDto patientDto = BeanUtil.copyProperties(patient.getData(), PatientDto.class);
         DoctorDto doctorDto = BeanUtil.copyProperties(doctor.getData(), DoctorDto.class);
         log.info(doctor.toString());

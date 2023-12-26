@@ -23,7 +23,7 @@ public class AppointmentMQService {
     public void sendToManage(String info){
         //医院id、就诊时间、医生id、用户id、病情描述。
         //医生id、用户id、就诊时间
-        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_TOPIC_RESERVATION, RabbitMQConfig.ROUTING_KEY_MANAGEMENT, "ok");
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_TOPIC_RESERVATION, RabbitMQConfig.ROUTING_KEY_MANAGEMENT, info);
     }
 
     //发消息到审核微服务
