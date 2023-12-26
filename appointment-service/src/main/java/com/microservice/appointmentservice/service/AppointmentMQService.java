@@ -48,7 +48,7 @@ public class AppointmentMQService {
                 if (appointmentDto.getApprovalStatus().equals("预约待审核")) {
                     //预约审核通过
                     if (approvalResultDto.getAuditStatus().equals("审核通过")) {
-                        appointmentService.changeApprovalStatus(approvalResultDto.getOrderId(), "预约审核通过");
+                        appointmentService.changeApprovalStatus(approvalResultDto.getOrderId(), "正常");
                         appointmentService.addTOManage(appointmentService.getAppointmentById(approvalResultDto.getOrderId()));
                     }
                     else
@@ -61,7 +61,7 @@ public class AppointmentMQService {
                         appointmentService.deleteAppointmentById(approvalResultDto.getOrderId());
                         appointmentService.deleteTOManage(appointmentService.getAppointmentById(approvalResultDto.getOrderId()));
                     } else
-                        appointmentService.changeApprovalStatus(approvalResultDto.getOrderId(), "取消审核不通过");
+                        appointmentService.changeApprovalStatus(approvalResultDto.getOrderId(), "正常");
                 }
 
             }

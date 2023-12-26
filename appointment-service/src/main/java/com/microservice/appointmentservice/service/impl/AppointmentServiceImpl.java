@@ -8,9 +8,10 @@ import com.microservice.appointmentservice.dto.*;
 import com.microservice.appointmentservice.entity.OrderInfo;
 import com.microservice.appointmentservice.mapper.OrderInfoMapper;
 import com.microservice.appointmentservice.pojo.BookRequest;
+import com.microservice.appointmentservice.pojo.CancelRequest;
 import com.microservice.appointmentservice.service.AppointmentMQService;
 import com.microservice.appointmentservice.service.AppointmentService;
-import com.microservice.appointmentservice.service.HospitalManageServiceFeignClient;
+import com.microservice.appointmentservice.service.HospitalManageFeignService;
 import com.microservice.appointmentservice.service.PersonalInfoFeignService;
 import com.microservice.common.api.CommonResult;
 import lombok.extern.slf4j.Slf4j;
@@ -35,9 +36,6 @@ public class AppointmentServiceImpl implements AppointmentService {
     private OrderInfoMapper orderInfoMapper;
 
     @Autowired
-    private HospitalManageServiceFeignClient hospitalManageService;
-
-    @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
     @Autowired
@@ -45,6 +43,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Autowired
     private PersonalInfoFeignService personalInfoFeignService;
+
+    @Autowired
+    private HospitalManageFeignService hospitalManageFeignService;
     public AppointmentDto getAppointmentById(Integer id){
         OrderInfo orderInfo=orderInfoMapper.selectById(id);
         AppointmentDto dto = new AppointmentDto();
@@ -65,9 +66,10 @@ public class AppointmentServiceImpl implements AppointmentService {
         return dto;
     }
 
-    public void deleteAppointmentById(Integer id){
-        int delete=orderInfoMapper.deleteById(id);
+    public Integer deleteAppointmentById(Integer id){
+        Integer delete=orderInfoMapper.deleteById(id);
         log.warn("delete==>{}", delete);
+        return delete;
     }
 
     public void addTOManage(AppointmentDto appointmentDto){
@@ -111,14 +113,16 @@ public class AppointmentServiceImpl implements AppointmentService {
         log.warn("insert==>{}", insert);
         //判断是否需要审核
         if(orderCountToday>=3){
-            ;//TODO:需要审核则调用审核微服务和消息微服务
             changeApprovalStatus(orderInfo.getId(),"预约待审核");
             //转换成json
             ApprovalDto approvalDto=new ApprovalDto();
             approvalDto.setKind("患者");
             approvalDto.setUsername(orderInfo.getPatientId());
-            //Todo:需要从医院服务调取
-            approvalDto.setAdminUsername("ly");
+            //医院管理微服务获取管理员
+            CommonResult result = hospitalManageFeignService.getHospitalAdministrator(orderInfo.getHospital());
+            LinkedHashMap data = (LinkedHashMap) result.getData();
+            approvalDto.setAdminUsername((String) data.get("administrator"));
+//            approvalDto.setAdminUsername("ly");
             approvalDto.setCancelReason("单日多次预约");
             approvalDto.setAuditStatus("预约待审核");
             approvalDto.setOrderId(orderInfo.getId());
@@ -133,10 +137,11 @@ public class AppointmentServiceImpl implements AppointmentService {
             }
             //发送
             appointmentMQService.appointmentNeedApproval(jsonString);
-            return -1;
+            return 0;
         }
         //不需要审核，直接结束，发消息给医院
-        //TODO:发消息给医院管理，医院管理监听到修改医院数据库
+        changeApprovalStatus(orderInfo.getId(),"正常");
+        //发消息给医院管理，医院管理监听到修改医院数据库
         addTOManage(getAppointmentById(orderInfo.getId()));
         if (insert == 1) {
             return orderInfo.getId();
@@ -205,8 +210,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 //        HashOperations<String, String, Long> hashOperations = redisTemplate.opsForHash();
 //        return hashOperations.get(CANCEL_COUNT_KEY_PREFIX + userId, currentDate);
 //    }
-    public Boolean patientCancel(Integer orderId) {
-        OrderInfo orderInfo = orderInfoMapper.selectById(orderId);
+    public Integer patientCancel(CancelRequest cancelRequest) {
+        OrderInfo orderInfo = orderInfoMapper.selectById(cancelRequest.getOrderId());
         String patientId = orderInfo.getPatientId();
         String currentDate = LocalDate.now().toString();
 
@@ -232,9 +237,12 @@ public class AppointmentServiceImpl implements AppointmentService {
             ApprovalDto approvalDto=new ApprovalDto();
             approvalDto.setKind("患者");
             approvalDto.setUsername(orderInfo.getPatientId());
-            //Todo:需要从医院服务调取
-            approvalDto.setAdminUsername("ly");
-            approvalDto.setCancelReason("临时有事");
+            //医院管理微服务获取管理员
+            CommonResult result = hospitalManageFeignService.getHospitalAdministrator(orderInfo.getHospital());
+            LinkedHashMap data = (LinkedHashMap) result.getData();
+            approvalDto.setAdminUsername((String) data.get("administrator"));
+//            approvalDto.setAdminUsername("ly");
+            approvalDto.setCancelReason(cancelRequest.getCancelReason());
             approvalDto.setAuditStatus("取消待审核");
             approvalDto.setOrderId(orderInfo.getId());
             ObjectMapper objectMapper = new ObjectMapper();
@@ -247,13 +255,18 @@ public class AppointmentServiceImpl implements AppointmentService {
             }
             //发送
             appointmentMQService.appointmentNeedApproval(jsonString);
-            return false;
+            return 0;
         }
         //给管理
-        deleteTOManage(getAppointmentById(orderId));
+        deleteTOManage(getAppointmentById(cancelRequest.getOrderId()));
         //System.out.println(hashOperations.get(CANCEL_COUNT_KEY_PREFIX + patientId , currentDate));
-        deleteAppointmentById(orderId);
-        return true;
+        Integer delete= deleteAppointmentById(cancelRequest.getOrderId());
+
+        if (delete == 1) {
+            return orderInfo.getId();
+        } else {
+            return -1;
+        }
     }
 
     public void deleteTOManage(AppointmentDto appointmentDto){
@@ -277,17 +290,20 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointmentMQService.sendToManage(jsonString);
     }
 
-    public Boolean doctorCancel(Integer orderId) {
-        changeApprovalStatus(orderId,"取消待审核");
-        AppointmentDto appointmentDto=getAppointmentById(orderId);
+    public Boolean doctorCancel(CancelRequest cancelRequest) {
+        changeApprovalStatus(cancelRequest.getOrderId(),"取消待审核");
+        AppointmentDto appointmentDto=getAppointmentById(cancelRequest.getOrderId());
         ApprovalDto approvalDto=new ApprovalDto();
         approvalDto.setKind("医生");
         approvalDto.setUsername(appointmentDto.getPatientId());
-        //Todo:需要从医院服务调取
-        approvalDto.setAdminUsername("ly");
-        approvalDto.setCancelReason("临时有事");
+        //医院管理微服务获取管理员
+        CommonResult result = hospitalManageFeignService.getHospitalAdministrator(appointmentDto.getHospital());
+        LinkedHashMap data = (LinkedHashMap) result.getData();
+        approvalDto.setAdminUsername((String) data.get("administrator"));
+//            approvalDto.setAdminUsername("ly");
+        approvalDto.setCancelReason(cancelRequest.getCancelReason());
         approvalDto.setAuditStatus("取消待审核");
-        approvalDto.setOrderId(orderId);
+        approvalDto.setOrderId(cancelRequest.getOrderId());
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString="";
         try {

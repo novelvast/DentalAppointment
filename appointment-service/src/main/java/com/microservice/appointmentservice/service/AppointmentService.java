@@ -4,6 +4,7 @@ import com.microservice.appointmentservice.dto.AppointmentDto;
 import com.microservice.appointmentservice.entity.OrderInfo;
 import com.microservice.appointmentservice.pojo.BookRequest;
 import com.microservice.appointmentservice.pojo.BookResponse;
+import com.microservice.appointmentservice.pojo.CancelRequest;
 import com.microservice.appointmentservice.service.impl.AppointmentServiceImpl;
 import com.microservice.common.api.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,13 @@ public interface AppointmentService {
 
     List<AppointmentDto> getAppointmentByDoctorId(String doctorId);
 
-    Boolean patientCancel(Integer orderId);
+    Integer patientCancel(CancelRequest cancelRequest);
 
-    Boolean doctorCancel(Integer orderId);
+    Boolean doctorCancel(CancelRequest cancelRequest);
 
     AppointmentDto getAppointmentById(Integer id);
     void changeApprovalStatus(Integer orderId,String status);
-    void deleteAppointmentById(Integer id);
+    Integer deleteAppointmentById(Integer id);
 
     void addTOManage(AppointmentDto appointmentDto);
 
