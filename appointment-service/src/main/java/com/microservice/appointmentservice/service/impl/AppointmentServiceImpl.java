@@ -274,6 +274,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         manageDeleteDto.setClinicTime(appointmentDto.getClinicTime());
         manageDeleteDto.setPatientId(appointmentDto.getPatientId());
         manageDeleteDto.setDoctorId(appointmentDto.getDoctorId());
+        manageDeleteDto.setHospital(appointmentDto.getHospital());
 
         ManageMQDto manageMQDto=new ManageMQDto();
         manageMQDto.setData(manageDeleteDto);

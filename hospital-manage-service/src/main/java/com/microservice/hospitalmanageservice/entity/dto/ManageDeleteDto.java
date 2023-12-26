@@ -17,9 +17,9 @@ import java.time.LocalDateTime;
 public class ManageDeleteDto {
     private String patientId;
     private String doctorId;
-
+    private String hospital;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonFormat(pattern = "yyyy-MM-ddTHH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime clinicTime;
 }
