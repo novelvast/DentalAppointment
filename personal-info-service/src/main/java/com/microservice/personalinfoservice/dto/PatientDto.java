@@ -30,7 +30,7 @@ public class PatientDto implements Serializable {
 
     private String email;
 
-    private Integer idNumber;
+    private String idNumber;
 
     private String name;
 
