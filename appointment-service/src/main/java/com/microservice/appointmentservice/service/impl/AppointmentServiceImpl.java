@@ -11,6 +11,8 @@ import com.microservice.appointmentservice.pojo.BookRequest;
 import com.microservice.appointmentservice.service.AppointmentMQService;
 import com.microservice.appointmentservice.service.AppointmentService;
 import com.microservice.appointmentservice.service.HospitalManageServiceFeignClient;
+import com.microservice.appointmentservice.service.PersonalInfoFeignService;
+import com.microservice.common.api.CommonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -39,11 +42,19 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Autowired
     private AppointmentMQService appointmentMQService;
+
+    @Autowired
+    private PersonalInfoFeignService personalInfoFeignService;
     public AppointmentDto getAppointmentById(Integer id){
         OrderInfo orderInfo=orderInfoMapper.selectById(id);
         AppointmentDto dto = new AppointmentDto();
         dto.setId(orderInfo.getId());
         dto.setPatientId(orderInfo.getPatientId());
+        //调用信息api，获取用户名
+        CommonResult result = personalInfoFeignService.getByName(orderInfo.getPatientId());
+        LinkedHashMap data = (LinkedHashMap) result.getData();
+        dto.setPatientName((String) data.get("name"));
+
         dto.setDoctorId(orderInfo.getDoctorId());
         dto.setOrderTime(orderInfo.getOrderTime());
         dto.setClinicTime(orderInfo.getClinicTime());
@@ -144,6 +155,10 @@ public class AppointmentServiceImpl implements AppointmentService {
             AppointmentDto dto = new AppointmentDto();
             dto.setId(orderInfo.getId());
             dto.setPatientId(orderInfo.getPatientId());
+            //调用信息api，获取用户名
+            CommonResult commonResult = personalInfoFeignService.getByName(orderInfo.getPatientId());
+            LinkedHashMap data = (LinkedHashMap) commonResult.getData();
+            dto.setPatientName((String) data.get("name"));
             dto.setDoctorId(orderInfo.getDoctorId());
             dto.setOrderTime(orderInfo.getOrderTime());
             dto.setClinicTime(orderInfo.getClinicTime());
@@ -166,6 +181,10 @@ public class AppointmentServiceImpl implements AppointmentService {
             AppointmentDto dto = new AppointmentDto();
             dto.setId(orderInfo.getId());
             dto.setPatientId(orderInfo.getPatientId());
+            //调用信息api，获取用户名
+            CommonResult commonResult = personalInfoFeignService.getByName(orderInfo.getPatientId());
+            LinkedHashMap data = (LinkedHashMap) commonResult.getData();
+            dto.setPatientName((String) data.get("name"));
             dto.setDoctorId(orderInfo.getDoctorId());
             dto.setOrderTime(orderInfo.getOrderTime());
             dto.setClinicTime(orderInfo.getClinicTime());
@@ -173,6 +192,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             dto.setHospital(orderInfo.getHospital());
             dto.setOrderDepartment(orderInfo.getOrderDepartment());
             dto.setApprovalStatus(orderInfo.getApprovalStatus());
+            result.add(dto);
         }
         return result;
     }
