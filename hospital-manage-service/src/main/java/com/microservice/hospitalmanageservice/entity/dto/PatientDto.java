@@ -12,7 +12,7 @@ public class PatientDto {
     private String username;
     private String phone;
     private String email;
-    private Integer idNumber;
+    private String idNumber;
     private String name;
     private String gender;
     private String birthday;

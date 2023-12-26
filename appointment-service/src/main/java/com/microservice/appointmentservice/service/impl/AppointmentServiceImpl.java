@@ -249,10 +249,10 @@ public class AppointmentServiceImpl implements AppointmentService {
             appointmentMQService.appointmentNeedApproval(jsonString);
             return false;
         }
-        //System.out.println(hashOperations.get(CANCEL_COUNT_KEY_PREFIX + patientId , currentDate));
-        deleteAppointmentById(orderId);
         //给管理
         deleteTOManage(getAppointmentById(orderId));
+        //System.out.println(hashOperations.get(CANCEL_COUNT_KEY_PREFIX + patientId , currentDate));
+        deleteAppointmentById(orderId);
         return true;
     }
 

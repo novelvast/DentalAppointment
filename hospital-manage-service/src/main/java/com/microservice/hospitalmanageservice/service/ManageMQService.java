@@ -8,6 +8,7 @@ import com.microservice.common.config.RabbitMQConfig;
 import com.microservice.hospitalmanageservice.entity.dto.AppointmentDto;
 import com.microservice.hospitalmanageservice.entity.dto.MQDto;
 import com.microservice.hospitalmanageservice.entity.dto.ManageAddDto;
+import com.microservice.hospitalmanageservice.entity.dto.ManageDeleteDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -28,24 +29,24 @@ public class ManageMQService {
     @RabbitListener(queues = RabbitMQConfig.QUEUE_MANAGEMENT)
     public void listenFromApproval(String result) {
         ObjectMapper objectMapper = new ObjectMapper();
-        log.info("成功接受{}",result);
         try {
             MQDto mqDto = objectMapper.readValue(result, MQDto.class);
             if (mqDto.getType().equals("添加数据")) {
                 // 将 JSON 字符串转化为对象
                 ManageAddDto manageAddDto = BeanUtil.copyProperties(mqDto.getData(), ManageAddDto.class);
-                String addString = (String) mqDto.getData();
 //                ManageAddDto manageAddDto = objectMapper.readValue(addString, ManageAddDto.class);
                 // 添加数据
+                log.info("成功接受{}",manageAddDto.toString());
                 AppointmentDto appointmentDto = new AppointmentDto();
                 appointmentDto.setDoctorId(manageAddDto.getDoctorId());
                 appointmentDto.setUserName(manageAddDto.getPatientId());
-//                appointmentDto.setAppointmentDateTime(manageAddDto.getClinicTime());
+                appointmentDto.setAppointmentDateTime(manageAddDto.getClinicTime());
                 appointmentDto.setPatientCondition(manageAddDto.getDiseaseDescription());
                 appointmentService.add(manageAddDto.getHospital(),appointmentDto);
             }
-            if (mqDto.equals("删除数据")) {
-                ;
+            if (mqDto.getType().equals("删除数据")) {
+                ManageDeleteDto manageDeleteDto = BeanUtil.copyProperties(mqDto.getData(), ManageDeleteDto.class);
+                log.info("成功接收{}",manageDeleteDto.toString());
             }
         } catch (Exception e) {
             e.printStackTrace();

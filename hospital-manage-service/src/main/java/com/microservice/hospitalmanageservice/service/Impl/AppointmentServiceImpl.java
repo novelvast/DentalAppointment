@@ -69,10 +69,10 @@ public class AppointmentServiceImpl implements IAppointmentService {
             case "1":
                 AppointmentDto1 appointmentDto1 = new AppointmentDto1();
                 appointmentDto1.setDoctorId(doctorDto.getJobNumber());
-                appointmentDto1.setPatientId(patientDto.getIdNumber().toString());
+                appointmentDto1.setPatientId(patientDto.getIdNumber());
                 appointmentDto1.setDept("口腔科");
                 appointmentDto1.setPatientName(patientDto.getName());
-                appointmentDto1.setPatientGender(patientDto.getGender().equals("男") ? 1 : 0);
+                appointmentDto1.setPatientGender(patientDto.getGender().equals("男") ? 1 : 2);
                 appointmentDto1.setPatientAge(LocalDate.now().getYear() - LocalDate.parse(patientDto.getBirthday()).getYear());
                 appointmentDto1.setTreatmentTime(appointmentDto.getAppointmentDateTime());
                 appointmentDto1.setConditionDescription(appointmentDto.getPatientCondition());
@@ -81,7 +81,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
                 break;
             case "2":
                 AppointmentDto2 appointmentDto2 = new AppointmentDto2();
-                appointmentDto2.setPatientId(patientDto.getIdNumber().toString());
+                appointmentDto2.setPatientId(patientDto.getIdNumber());
                 appointmentDto2.setDoctorId(doctorDto.getJobNumber().toString());
                 appointmentDto2.setDeptId(11);
                 appointmentDto2.setPatientName(patientDto.getName());
@@ -94,7 +94,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
                 break;
             case "3":
                 AppointmentDto3 appointmentDto3 = new AppointmentDto3();
-                appointmentDto3.setPatientId(patientDto.getIdNumber().toString());
+                appointmentDto3.setPatientId(patientDto.getIdNumber());
                 appointmentDto3.setDoctorId(doctorDto.getJobNumber().toString());
                 appointmentDto3.setDeptId(11);
                 appointmentDto3.setPatientName(patientDto.getName());
