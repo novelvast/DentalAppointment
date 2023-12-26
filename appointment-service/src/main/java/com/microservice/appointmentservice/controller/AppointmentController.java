@@ -55,7 +55,7 @@ public class AppointmentController {
     @ApiOperation("患者预约")
     @PostMapping("/book")
     @CrossOrigin(origins = "*")
-    //时间格式形如2023-12-11 10:43:07
+    //时间格式形如2023-12-11T10:43:07
     public CommonResult bookAppointment(@RequestBody BookRequest bookRequest) {
         int result = appointmentService.book(bookRequest);
         if(result==-1){

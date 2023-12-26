@@ -32,14 +32,14 @@ public class OrderInfo {
 
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-ddTHH:mm:ss")
     //下单的时间
     @TableField("order_time")
     private LocalDateTime orderTime;
 
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-ddTHH:mm:ss")
     //预约就诊的时间
     @TableField("clinic_time")
     private LocalDateTime clinicTime;
