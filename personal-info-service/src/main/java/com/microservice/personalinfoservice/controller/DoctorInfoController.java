@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * 医生信息管理Controller
@@ -121,5 +122,19 @@ public class DoctorInfoController {
     @PostMapping("/email")
     public String getEmailByName(@RequestParam String username){
         return doctorInfoService.getEmailByName(username);
+    }
+
+    @ApiOperation("获取医院所有医生")
+    @GetMapping("/getByHospital/{hospitalId}")
+    public CommonResult getByHospital(@PathVariable Integer hospitalId) {
+        List<DoctorDto> doctorDtoList = doctorInfoService.getByHospital(hospitalId);
+
+        if(doctorDtoList.isEmpty()) {
+            return CommonResult.failed("该医院没有医生数据");
+        }
+        else {
+            return CommonResult.success(doctorDtoList);
+        }
+
     }
 }

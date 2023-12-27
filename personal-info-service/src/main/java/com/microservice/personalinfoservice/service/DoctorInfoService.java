@@ -7,6 +7,8 @@ import com.microservice.personalinfoservice.dto.PatientDto;
 import com.microservice.personalinfoservice.entity.DoctorInfo;
 import com.microservice.personalinfoservice.entity.PatientInfo;
 
+import java.util.List;
+
 /**
  * 医生信息管理Service
  *
@@ -60,5 +62,7 @@ public interface DoctorInfoService {
      * 获取邮箱，消息服务调用
      */
     String getEmailByName(String username);
+
+    List<DoctorDto> getByHospital(Integer hospitalId);
 }
 

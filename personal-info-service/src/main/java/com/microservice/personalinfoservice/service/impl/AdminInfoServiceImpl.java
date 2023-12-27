@@ -94,9 +94,9 @@ public class AdminInfoServiceImpl implements AdminInfoService {
         adminInfoUpdateWrapper.eq("username",username)
                 .set("phone", phone)
                 .set("email", email)
-                .set("hospitalId", hospitalId)
+                .set("hospital_id", hospitalId)
                 .set("name", name)
-                .set("jobNumber", jobNumber);
+                .set("job_number", jobNumber);
 
         int result = adminInfoMapper.update(null, adminInfoUpdateWrapper);
 

@@ -16,9 +16,7 @@ import com.microservice.personalinfoservice.service.HospitalManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class DoctorInfoServiceImpl implements DoctorInfoService {
@@ -119,11 +117,11 @@ public class DoctorInfoServiceImpl implements DoctorInfoService {
         doctorInfoUpdateWrapper.eq("username",username)
                 .set("phone", phone)
                 .set("email", email)
-                .set("hospitalId", hospitalId)
+                .set("hospital_id", hospitalId)
                 .set("name", name)
-                .set("jobNumber", jobNumber)
+                .set("job_number", jobNumber)
                 .set("department", department)
-                .set("photoUrl", photoUrl);
+                .set("photo_url", photoUrl);
 
         int result = doctorInfoMapper.update(null, doctorInfoUpdateWrapper);
 
@@ -171,5 +169,21 @@ public class DoctorInfoServiceImpl implements DoctorInfoService {
             return doctorInfo.getEmail();
         }
         return null;
+    }
+
+    @Override
+    public List<DoctorDto> getByHospital(Integer hospitalId) {
+        QueryWrapper<DoctorInfo> doctorDtoQueryWrapper = new QueryWrapper<>();
+        doctorDtoQueryWrapper.eq("hospital_id", hospitalId);
+
+        List<DoctorInfo> doctorInfoList = doctorInfoMapper.selectList(doctorDtoQueryWrapper);
+        List<DoctorDto> doctorDtoList = new ArrayList<>();
+        DoctorDto doctorDto = new DoctorDto();
+        for (DoctorInfo doctorInfo : doctorInfoList) {
+            BeanUtil.copyProperties(doctorInfo, doctorDto);
+            doctorDtoList.add(doctorDto);
+        }
+
+        return doctorDtoList;
     }
 }
