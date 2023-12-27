@@ -178,8 +178,9 @@ public class DoctorInfoServiceImpl implements DoctorInfoService {
 
         List<DoctorInfo> doctorInfoList = doctorInfoMapper.selectList(doctorDtoQueryWrapper);
         List<DoctorDto> doctorDtoList = new ArrayList<>();
-        DoctorDto doctorDto = new DoctorDto();
+
         for (DoctorInfo doctorInfo : doctorInfoList) {
+            DoctorDto doctorDto = new DoctorDto();
             BeanUtil.copyProperties(doctorInfo, doctorDto);
             doctorDtoList.add(doctorDto);
         }
