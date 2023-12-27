@@ -8,6 +8,7 @@ import com.microservice.hospitalmanageservice.service.IAppointmentService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.xml.transform.Result;
 import java.util.List;
 
 @RestController
@@ -39,6 +40,16 @@ public class AppointmentController {
             return CommonResult.success("删除成功");
         } catch (Exception e) {
             return CommonResult.failed("删除失败");
+        }
+    }
+
+    @PutMapping
+    public CommonResult modify(@PathVariable String hospitalId, @RequestBody AppointmentDto appointmentDto){
+        try {
+            appointmentService.modify(hospitalId, appointmentDto);
+            return CommonResult.success("修改成功");
+        } catch (Exception e) {
+            return CommonResult.failed(e.getMessage());
         }
     }
 }

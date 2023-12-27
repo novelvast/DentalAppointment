@@ -11,4 +11,5 @@ public interface IAppointmentService {
     void add(String hospitalId, AppointmentDto appointmentDto);
 
     void removeById(String hospitalId, String id);
+    void modify(String hospitalId, AppointmentDto appointmentDto);
 }

@@ -120,4 +120,47 @@ public class AppointmentServiceImpl implements IAppointmentService {
         String url = MessageFormat.format(Objects.requireNonNull(environment.getProperty("api.his" + hospitalId + ".appointment.deleteById")), id);
         restTemplate.delete(url);
     }
+
+    @Override
+    public void modify(String hospitalId, AppointmentDto appointmentDto) {
+        CommonResult patient = personInfoClient.getPatientById(appointmentDto.getUserName());
+        CommonResult doctor = personInfoClient.getDoctorById(Integer.valueOf(appointmentDto.getDoctorId()));
+        PatientDto patientDto = BeanUtil.copyProperties(patient.getData(), PatientDto.class);
+        DoctorDto doctorDto = BeanUtil.copyProperties(doctor.getData(), DoctorDto.class);
+        //创建post对象并赋值
+        Object newAppointmentDto = new Object();
+        // 调用第三方api
+        String url = Objects.requireNonNull(environment.getProperty("api.his" + hospitalId + ".appointment.add"));
+        switch (hospitalId) {
+            case "1":
+                AppointmentDto1 appointmentDto1 = new AppointmentDto1();
+                appointmentDto1.setDoctorId(doctorDto.getJobNumber());
+                appointmentDto1.setPatientId(patientDto.getIdNumber());
+                appointmentDto1.setTreatmentTime(appointmentDto.getAppointmentDateTime());
+                newAppointmentDto = appointmentDto1;
+                break;
+            case "2":
+                AppointmentDto2 appointmentDto2 = new AppointmentDto2();
+                appointmentDto2.setPatientId(patientDto.getIdNumber());
+                appointmentDto2.setDoctorId(doctorDto.getJobNumber().toString());
+                appointmentDto2.setAppointmentDateTime(appointmentDto.getAppointmentDateTime());
+                newAppointmentDto = appointmentDto2;
+                break;
+            case "3":
+                AppointmentDto3 appointmentDto3 = new AppointmentDto3();
+                appointmentDto3.setPatientId(patientDto.getIdNumber());
+                appointmentDto3.setDoctorId(doctorDto.getJobNumber().toString());
+                appointmentDto3.setAppointmentDateTime(appointmentDto.getAppointmentDateTime());
+                newAppointmentDto = appointmentDto3;
+                break;
+        }
+        log.info(newAppointmentDto.toString());
+        // 设置请求头
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        // 设置请求体数据
+        HttpEntity<Object> request = new HttpEntity<>(newAppointmentDto, headers);
+        // 发送POST请求
+        restTemplate.put(url, request);
+    }
 }

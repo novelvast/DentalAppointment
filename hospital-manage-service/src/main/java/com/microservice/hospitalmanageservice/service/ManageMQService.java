@@ -47,11 +47,14 @@ public class ManageMQService {
             if (mqDto.getType().equals("删除数据")) {
                 ManageDeleteDto manageDeleteDto = BeanUtil.copyProperties(mqDto.getData(), ManageDeleteDto.class);
                 log.info("成功接收{}",manageDeleteDto.toString());
+                AppointmentDto appointmentDto = new AppointmentDto();
+                appointmentDto.setDoctorId(manageDeleteDto.getDoctorId());
+                appointmentDto.setUserName(manageDeleteDto.getPatientId());
+                appointmentDto.setAppointmentDateTime(manageDeleteDto.getClinicTime());
+                appointmentService.modify(manageDeleteDto.getHospital(),appointmentDto);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    //修改完毕，如果失败，发消息给预约，来回退
 }
