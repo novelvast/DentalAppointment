@@ -33,4 +33,8 @@ public class DoctorDto implements Serializable {
     private String name;
 
     private Integer jobNumber;
+
+    private String department;
+
+    private String photoUrl;
 }

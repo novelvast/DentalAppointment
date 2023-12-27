@@ -34,7 +34,7 @@ public class DoctorInfoServiceImpl implements DoctorInfoService {
 
     @Override
     public Boolean register(String username, String password, String phone, String email, Integer hospitalId,
-                            String name, Integer jobNumber) {
+                            String name, Integer jobNumber, String department, String photoUrl) {
         // 查询是否已有该用户
         if (getByName(username) != null){
             return Boolean.FALSE;
@@ -55,6 +55,8 @@ public class DoctorInfoServiceImpl implements DoctorInfoService {
         doctorInfo.setHospitalId(hospitalId);
         doctorInfo.setName(name);
         doctorInfo.setJobNumber(jobNumber);
+        doctorInfo.setDepartment(department);
+        doctorInfo.setPhotoUrl(photoUrl);
         int result = doctorInfoMapper.insert(doctorInfo);
         if(result == 1){
             return Boolean.TRUE;
@@ -112,14 +114,16 @@ public class DoctorInfoServiceImpl implements DoctorInfoService {
 
     @Override
     public Boolean updateInfo(String username, String phone, String email, Integer hospitalId, String name,
-                              Integer jobNumber) {
+                              Integer jobNumber, String department, String photoUrl) {
         UpdateWrapper<DoctorInfo> doctorInfoUpdateWrapper = new UpdateWrapper<>();
         doctorInfoUpdateWrapper.eq("username",username)
                 .set("phone", phone)
                 .set("email", email)
                 .set("hospitalId", hospitalId)
                 .set("name", name)
-                .set("jobNumber", jobNumber);
+                .set("jobNumber", jobNumber)
+                .set("department", department)
+                .set("photoUrl", photoUrl);
 
         int result = doctorInfoMapper.update(null, doctorInfoUpdateWrapper);
 

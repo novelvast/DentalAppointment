@@ -35,9 +35,11 @@ public class DoctorInfoController {
                                  @RequestParam String email,
                                  @RequestParam Integer hospitalId,
                                  @RequestParam String name,
-                                 @RequestParam Integer jobNumber){
+                                 @RequestParam Integer jobNumber,
+                                 @RequestParam String department,
+                                 @RequestParam String photoUrl){
 
-        Boolean result = doctorInfoService.register(username, password, phone, email, hospitalId, name, jobNumber);
+        Boolean result = doctorInfoService.register(username, password, phone, email, hospitalId, name, jobNumber, department, photoUrl);
         if(result == Boolean.TRUE) {
             return CommonResult.success(null,"注册成功");
         }
@@ -72,8 +74,10 @@ public class DoctorInfoController {
                                           @RequestParam String email,
                                           @RequestParam Integer hospitalId,
                                           @RequestParam String name,
-                                          @RequestParam Integer jobNumber){
-        Boolean result = doctorInfoService.updateInfo(username, phone, email, hospitalId, name, jobNumber);
+                                          @RequestParam Integer jobNumber,
+                                          @RequestParam String department,
+                                          @RequestParam String photoUrl){
+        Boolean result = doctorInfoService.updateInfo(username, phone, email, hospitalId, name, jobNumber, department, photoUrl);
         if(result == Boolean.TRUE) {
             return CommonResult.success(null,"修改成功");
         }

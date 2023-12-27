@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Zhao
- * @since 2023-12-23
+ * @since 2023-12-27
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -38,6 +38,10 @@ public class DoctorInfo implements Serializable {
     private String name;
 
     private Integer jobNumber;
+
+    private String department;
+
+    private String photoUrl;
 
 
 }
