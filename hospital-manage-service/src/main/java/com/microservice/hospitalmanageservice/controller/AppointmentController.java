@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.xml.transform.Result;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("{hospitalId}/appointment/")
@@ -20,7 +21,7 @@ public class AppointmentController {
     @GetMapping("doctor/{doctorId}/day/{day}")
     public CommonResult getByDoctorAndDay(@PathVariable String hospitalId, @PathVariable String doctorId, @PathVariable String day) {
         try {
-            List<AppointmentVo> appointmentVos = appointmentService.getByDoctorIdAndDay(hospitalId, doctorId, day);
+            Map<Object, Long> appointmentVos = appointmentService.getByDoctorIdAndDay(hospitalId, doctorId, day);
             return CommonResult.success(appointmentVos);
         } catch (Exception e) {
             return CommonResult.failed(e.getMessage());

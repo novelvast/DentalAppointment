@@ -1,12 +1,9 @@
 package com.microservice.hospitalmanageservice.service.Impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.alibaba.fastjson.JSON;
 import com.microservice.common.api.CommonResult;
 import com.microservice.hospitalmanageservice.client.PersonInfoClient;
 import com.microservice.hospitalmanageservice.entity.dto.*;
-import com.microservice.hospitalmanageservice.entity.po.AppointmentPo;
-import com.microservice.hospitalmanageservice.entity.po.HospitalPo;
 import com.microservice.hospitalmanageservice.entity.vo.AppointmentVo;
 import com.microservice.hospitalmanageservice.service.IAppointmentService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +18,11 @@ import org.springframework.web.client.RestTemplate;
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
-import java.time.Year;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -43,14 +42,21 @@ public class AppointmentServiceImpl implements IAppointmentService {
     }
 
     @Override
-    public List<AppointmentVo> getByDoctorIdAndDay(String hospitalId, String doctorId, String day) {
+    public Map<Object, Long> getByDoctorIdAndDay(String hospitalId, String doctorId, String day) {
         String url = MessageFormat.format(Objects.requireNonNull(environment.getProperty("api.his" + hospitalId + ".appointment.byDoctorIdAndDay")), doctorId, day);
         ResponseEntity<HashMap> responseEntity = restTemplate.getForEntity(url, HashMap.class);
         List<?> sourceList = (List<?>) Objects.requireNonNull(responseEntity.getBody()).get("data");
         List<AppointmentVo> appointmentVos = sourceList.stream()
                 .map(element -> BeanUtil.copyProperties(element, AppointmentVo.class))
                 .collect(Collectors.toList());
-        return appointmentVos;
+        log.info(appointmentVos.toString());
+        // 查询每个时间段的人数
+        Map<Object, Long> appointmentCountByHour = appointmentVos.stream()
+                .collect(Collectors.groupingBy(
+                        appointmentVo -> getHourRange(appointmentVo.getAppointmentDateTime()),
+                        Collectors.counting()
+                ));
+        return appointmentCountByHour;
     }
 
     @Override
@@ -162,5 +168,10 @@ public class AppointmentServiceImpl implements IAppointmentService {
         HttpEntity<Object> request = new HttpEntity<>(newAppointmentDto, headers);
         // 发送POST请求
         restTemplate.put(url, request);
+    }
+
+    private static LocalTime getHourRange(LocalDateTime localDateTime){
+        int hour = localDateTime.getHour();
+        return LocalTime.of(hour, 0);
     }
 }

@@ -31,6 +31,7 @@ public class CaseServiceImpl implements ICaseService {
     @Override
     public List<CaseVo> getMedicalRecordByPatientId(String hospitalId, String patientId) {
         String url = MessageFormat.format(Objects.requireNonNull(environment.getProperty("api.his" + hospitalId + ".case.byPatientId")),patientId);
+        log.info(url);
         ResponseEntity<HashMap> responseEntity = restTemplate.getForEntity(url, HashMap.class);
         List<?> sourceList = (List<?>) Objects.requireNonNull(responseEntity.getBody()).get("data");
         List<CaseVo> caseVos = sourceList.stream()
