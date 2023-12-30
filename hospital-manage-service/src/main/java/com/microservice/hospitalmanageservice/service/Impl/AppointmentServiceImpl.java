@@ -20,10 +20,7 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -54,8 +51,14 @@ public class AppointmentServiceImpl implements IAppointmentService {
         Map<Object, Long> appointmentCountByHour = appointmentVos.stream()
                 .collect(Collectors.groupingBy(
                         appointmentVo -> getHourRange(appointmentVo.getAppointmentDateTime()),
+                        LinkedHashMap::new,
                         Collectors.counting()
                 ));
+
+        for (Map.Entry<Object, Long> entry : appointmentCountByHour.entrySet()){
+            entry.setValue((long) (entry.getValue() > 10 ? 0 : 1));
+        }
+
         return appointmentCountByHour;
     }
 
