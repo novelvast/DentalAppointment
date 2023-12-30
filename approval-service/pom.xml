@@ -13,6 +13,7 @@
     <version>1.0-SNAPSHOT</version>
     <name>approval-service</name>
     <description>approval-service</description>
+    <packaging>jar</packaging>
 
     <dependencies>
         <!--mysql数据库-->

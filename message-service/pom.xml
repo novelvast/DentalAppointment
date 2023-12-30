@@ -13,6 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>message-service</name>
     <description>message-service</description>
+    <packaging>jar</packaging>
 
     <dependencies>
         <!--mysql数据库-->

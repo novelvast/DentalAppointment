@@ -13,6 +13,7 @@
     <version>1.0-SNAPSHOT</version>
     <name>gateway-service</name>
     <description>gateway-service</description>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>

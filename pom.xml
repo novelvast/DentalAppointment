@@ -17,6 +17,7 @@
         <module>appointment-service</module>
         <module>approval-service</module>
         <module>message-service</module>
+        <module>hospital-manage-service</module>
     </modules>
 
     <parent>

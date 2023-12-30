@@ -74,7 +74,7 @@ spring:
             - Path=/hospital-manage/**
           filters:
             - StripPrefix=1
-            - PrefixPath=/api/hospital-manage
+            - PrefixPath=/api/hospital
 
 
   security:
