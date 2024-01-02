@@ -14,9 +14,9 @@
         <module>personal-info-service</module>
         <module>message-service</module>
         <module>auth-service</module>
+        <module>gateway-service</module>
         <module>appointment-service</module>
         <module>approval-service</module>
-        <module>message-service</module>
         <module>hospital-manage-service</module>
     </modules>
 

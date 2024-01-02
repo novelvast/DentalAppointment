@@ -1,0 +1,14 @@
+com\microservice\approvalservice\controller\ApprovalController.class
+com\microservice\approvalservice\service\ApprovalMQService.class
+com\microservice\approvalservice\ApprovalServiceApplication.class
+com\microservice\approvalservice\entity\PatientCkInfo.class
+com\microservice\approvalservice\mapper\PatientCkInfoMapper.class
+com\microservice\approvalservice\service\impl\FeignServiceImpl.class
+com\microservice\approvalservice\list_to_json.class
+com\microservice\approvalservice\entity\DoctorCkInfo.class
+com\microservice\approvalservice\service\FeignService.class
+com\microservice\approvalservice\service\impl\ApprovalServiceImpl.class
+com\microservice\approvalservice\entity\RabbitResult.class
+com\microservice\approvalservice\entity\CheckResult.class
+com\microservice\approvalservice\mapper\DoctorCkInfoMapper.class
+com\microservice\approvalservice\service\ApprovalService.class

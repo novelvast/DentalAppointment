@@ -11,6 +11,7 @@ spring:
         server-addr: 47.115.205.56:8848
         username: nacos
         password: microservice
+        ip: 118.195.236.254
     sentinel:
       transport:
         dashboard: localhost:8090

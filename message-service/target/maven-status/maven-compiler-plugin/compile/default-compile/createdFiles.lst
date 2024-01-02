@@ -1,0 +1,13 @@
+com\microservice\messageservice\entity\Email.class
+com\microservice\messageservice\service\email.class
+com\microservice\messageservice\service\impl\Feign_Service.class
+com\microservice\messageservice\service\messageservice.class
+com\microservice\messageservice\service\impl\SendEmail.class
+com\microservice\messageservice\controller\controller_message.class
+com\microservice\messageservice\mapper\MessageMapper.class
+com\microservice\messageservice\controller\controller_sendmail.class
+com\microservice\messageservice\entity\Message.class
+com\microservice\messageservice\list_to_json.class
+com\microservice\messageservice\service\Feignservice.class
+com\microservice\messageservice\MessageServiceApplication.class
+com\microservice\messageservice\service\impl\Message_service.class

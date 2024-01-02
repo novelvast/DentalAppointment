@@ -9,6 +9,7 @@ spring:
         server-addr: 47.115.205.56:8848
         username: nacos
         password: microservice
+        ip: 47.117.145.92
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://rm-cn-pe33ibr74001zlgo.rwlb.rds.aliyuncs.com:3306/message_pass?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai

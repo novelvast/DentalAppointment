@@ -6,7 +6,6 @@
         <groupId>com.microservice</groupId>
         <artifactId>dental-appointment</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <artifactId>approval-service</artifactId>
