@@ -31,6 +31,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
     private final RestTemplate restTemplate;
     private final PersonInfoClient personInfoClient;
 
+    private final String[] targetHours = {"08:00","09:00", "10:00", "11:00", "14:00", "15:00", "16:00"};
     @Autowired
     public AppointmentServiceImpl(Environment environment, RestTemplate restTemplate, PersonInfoClient personInfoClient) {
         this.environment = environment;
@@ -46,17 +47,22 @@ public class AppointmentServiceImpl implements IAppointmentService {
         List<AppointmentVo> appointmentVos = sourceList.stream()
                 .map(element -> BeanUtil.copyProperties(element, AppointmentVo.class))
                 .collect(Collectors.toList());
-        log.info(appointmentVos.toString());
         // 查询每个时间段的人数
         Map<Object, Long> appointmentCountByHour = appointmentVos.stream()
                 .collect(Collectors.groupingBy(
                         appointmentVo -> getHourRange(appointmentVo.getAppointmentDateTime()),
-                        LinkedHashMap::new,
+                        TreeMap::new,
                         Collectors.counting()
                 ));
 
         for (Map.Entry<Object, Long> entry : appointmentCountByHour.entrySet()){
-            entry.setValue((long) (entry.getValue() > 10 ? 0 : 1));
+            entry.setValue((long) (entry.getValue() > 6 ? 0 : 1));
+        }
+
+        for (String hour : targetHours) {
+            if (!appointmentCountByHour.containsKey(LocalTime.parse(hour))) {
+                appointmentCountByHour.put(LocalTime.parse(hour), 1L);
+            }
         }
 
         return appointmentCountByHour;
