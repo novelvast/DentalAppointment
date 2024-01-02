@@ -1,15 +1,11 @@
 package com.microservice.hospitalmanageservice.controller;
 
-import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.microservice.common.api.CommonResult;
 import com.microservice.hospitalmanageservice.entity.dto.AppointmentDto;
-import com.microservice.hospitalmanageservice.entity.vo.AppointmentVo;
 import com.microservice.hospitalmanageservice.service.IAppointmentService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.xml.transform.Result;
-import java.util.List;
 import java.util.Map;
 
 @RestController

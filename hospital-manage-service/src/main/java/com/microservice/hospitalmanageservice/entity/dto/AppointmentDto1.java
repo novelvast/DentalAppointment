@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppointmentDto1{
+    private Integer id;
     private Integer doctorId;
     private String patientId;
     private String dept;

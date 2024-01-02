@@ -1,6 +1,7 @@
 package com.microservice.hospitalmanageservice.service.Impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import com.microservice.common.api.CommonResult;
 import com.microservice.hospitalmanageservice.client.PersonInfoClient;
 import com.microservice.hospitalmanageservice.entity.dto.*;
@@ -31,7 +32,8 @@ public class AppointmentServiceImpl implements IAppointmentService {
     private final RestTemplate restTemplate;
     private final PersonInfoClient personInfoClient;
 
-    private final String[] targetHours = {"08:00","09:00", "10:00", "11:00", "14:00", "15:00", "16:00"};
+    private final String[] targetHours = {"08:00", "09:00", "10:00", "11:00", "14:00", "15:00", "16:00"};
+
     @Autowired
     public AppointmentServiceImpl(Environment environment, RestTemplate restTemplate, PersonInfoClient personInfoClient) {
         this.environment = environment;
@@ -42,20 +44,58 @@ public class AppointmentServiceImpl implements IAppointmentService {
     @Override
     public Map<Object, Long> getByDoctorIdAndDay(String hospitalId, String doctorId, String day) {
         String url = MessageFormat.format(Objects.requireNonNull(environment.getProperty("api.his" + hospitalId + ".appointment.byDoctorIdAndDay")), doctorId, day);
+        log.info(url);
         ResponseEntity<HashMap> responseEntity = restTemplate.getForEntity(url, HashMap.class);
         List<?> sourceList = (List<?>) Objects.requireNonNull(responseEntity.getBody()).get("data");
-        List<AppointmentVo> appointmentVos = sourceList.stream()
-                .map(element -> BeanUtil.copyProperties(element, AppointmentVo.class))
-                .collect(Collectors.toList());
+        List<AppointmentVo> appointmentVos = new ArrayList<>();
+        switch (hospitalId) {
+            case "1":
+                List<AppointmentDto1> appointments1 = sourceList.stream()
+                        .map(element -> BeanUtil.copyProperties(element, AppointmentDto1.class))
+                        .collect(Collectors.toList());
+                for (AppointmentDto1 appointmentDto1 : appointments1) {
+                    AppointmentVo appointmentVo = new AppointmentVo();
+                    BeanUtil.copyProperties(appointmentDto1,appointmentVo);
+                    appointmentVo.setAppointmentId(appointmentDto1.getId().toString());
+                    appointmentVo.setAppointmentDateTime(appointmentDto1.getTreatmentTime());
+                    appointmentVo.setDeptId(11);
+                    appointmentVo.setPatientCondition(appointmentDto1.getConditionDescription());
+                    log.info(appointmentVo.toString());
+                    appointmentVos.add(appointmentVo);
+                }
+                break;
+            case "2":
+                List<AppointmentDto2> appointments2 = sourceList.stream()
+                        .map(element -> BeanUtil.copyProperties(element, AppointmentDto2.class))
+                        .collect(Collectors.toList());
+                for (AppointmentDto2 appointmentDto2 : appointments2) {
+                    AppointmentVo appointmentVo = new AppointmentVo();
+                    BeanUtil.copyProperties(appointmentDto2,appointmentVo);
+                    appointmentVos.add(appointmentVo);
+                }
+                break;
+            case "3":
+                List<AppointmentDto3> appointments3 = sourceList.stream()
+                        .map(element -> BeanUtil.copyProperties(element, AppointmentDto3.class))
+                        .collect(Collectors.toList());
+                for (AppointmentDto3 appointmentDto3 : appointments3) {
+                    AppointmentVo appointmentVo = new AppointmentVo();
+                    BeanUtil.copyProperties(appointmentDto3,appointmentVo);
+                    appointmentVos.add(appointmentVo);
+                }
+                break;
+        }
+        log.info(appointmentVos.toString());
         // 查询每个时间段的人数
         Map<Object, Long> appointmentCountByHour = appointmentVos.stream()
                 .collect(Collectors.groupingBy(
-                        appointmentVo -> getHourRange(appointmentVo.getAppointmentDateTime()),
+                        appointmentVo1 -> getHourRange(appointmentVo1.getAppointmentDateTime()),
                         TreeMap::new,
                         Collectors.counting()
                 ));
 
-        for (Map.Entry<Object, Long> entry : appointmentCountByHour.entrySet()){
+        for (Map.Entry<Object, Long> entry : appointmentCountByHour.entrySet()) {
+            log.info(entry.getKey().toString()+"="+entry.getValue().toString());
             entry.setValue((long) (entry.getValue() > 6 ? 0 : 1));
         }
 
@@ -179,7 +219,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
         restTemplate.put(url, request);
     }
 
-    private static LocalTime getHourRange(LocalDateTime localDateTime){
+    private static LocalTime getHourRange(LocalDateTime localDateTime) {
         int hour = localDateTime.getHour();
         return LocalTime.of(hour, 0);
     }
