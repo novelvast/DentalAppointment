@@ -3,15 +3,13 @@ package com.microservice.hospitalmanageservice.controller;
 import com.microservice.common.api.CommonResult;
 import com.microservice.hospitalmanageservice.entity.vo.CaseVo;
 import com.microservice.hospitalmanageservice.service.ICaseService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("{hospitalId}/")
 public class CaseController {
     @Resource

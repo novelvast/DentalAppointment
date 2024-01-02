@@ -9,3 +9,4 @@ spring:
         server-addr: 47.115.205.56:8848
         username: nacos
         password: microservice
+        ip: 121.43.108.102

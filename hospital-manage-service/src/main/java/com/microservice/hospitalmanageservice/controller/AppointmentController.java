@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("{hospitalId}/appointment/")
 public class AppointmentController {
     @Resource

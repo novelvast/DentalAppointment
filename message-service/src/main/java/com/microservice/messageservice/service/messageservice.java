@@ -61,18 +61,18 @@ public class messageservice implements Message_service {
             message.setTime(formattedTime);
             messageMapper.insert(message);
 
-//            String user_email = "2153275@tongji.edu.cn";
-//            if(kind.equals("医生")){
-//                user_email=feignservice.get_doctor(receiver);
-//            }
-//            else if(kind.equals("患者")) {
-//                user_email=feignservice.get_patient(receiver);
-//            }
-//            Email email=new Email();
-//            email.setSendTo(user_email);
-//            email.setSubject("预约结果");
-//            email.setText(content);
-//            sendEmail.sendSimpleMail(email);
+            String user_email = "2153275@tongji.edu.cn";
+            if(kind.equals("医生")){
+                user_email=feignservice.get_doctor(receiver);
+            }
+            else if(kind.equals("患者")) {
+                user_email=feignservice.get_patient(receiver);
+            }
+            Email email=new Email();
+            email.setSendTo(user_email);
+            email.setSubject("预约结果");
+            email.setText(content);
+            sendEmail.sendSimpleMail(email);
             /*else
              *
              * 此处需要调用信息服务获取邮箱，还未写，不影响其他功能使用
