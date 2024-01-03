@@ -32,6 +32,11 @@ public interface AdminInfoService {
     AdminDto getByName(String username);
 
     /**
+     * 根据管理员id获取管理员信息
+     */
+    AdminDto getById(Integer adminId);
+
+    /**
      * 根据管理员名获取管理员所有信息
      */
     AdminInfo getAllInfoByName(String username);

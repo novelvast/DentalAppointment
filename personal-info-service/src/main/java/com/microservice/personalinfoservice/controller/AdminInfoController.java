@@ -4,6 +4,7 @@ import com.microservice.common.api.CommonResult;
 import com.microservice.common.domain.UserDto;
 import com.microservice.personalinfoservice.dto.AdminDto;
 import com.microservice.personalinfoservice.dto.DoctorDto;
+import com.microservice.personalinfoservice.dto.PatientDto;
 import com.microservice.personalinfoservice.service.AdminInfoService;
 import com.microservice.personalinfoservice.service.DoctorInfoService;
 import io.swagger.annotations.Api;
@@ -54,9 +55,19 @@ public class AdminInfoController {
 
     // 根据患者名获取患者信息
     @ApiOperation("根据管理员名获取管理员信息")
-    @GetMapping("/{patientName}")
-    public CommonResult getByName(@PathVariable String patientName){
-        AdminDto adminDto = adminInfoService.getByName(patientName);
+    @GetMapping("/{adminName}")
+    public CommonResult getByName(@PathVariable String adminName){
+        AdminDto adminDto = adminInfoService.getByName(adminName);
+        if(adminDto == null) {
+            return CommonResult.failed("查无此人");
+        }
+        return CommonResult.success(adminDto);
+    }
+
+    @ApiOperation("根据患者id获取管理员信息")
+    @GetMapping("/id/{adminId}")
+    public CommonResult getById(@PathVariable Integer adminId){
+        AdminDto adminDto = adminInfoService.getById(adminId);
         if(adminDto == null) {
             return CommonResult.failed("查无此人");
         }

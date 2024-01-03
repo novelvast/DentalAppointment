@@ -7,8 +7,10 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.microservice.common.api.CommonResult;
 import com.microservice.common.domain.UserDto;
 import com.microservice.personalinfoservice.dto.AdminDto;
+import com.microservice.personalinfoservice.dto.PatientDto;
 import com.microservice.personalinfoservice.entity.AdminInfo;
 import com.microservice.personalinfoservice.entity.DoctorInfo;
+import com.microservice.personalinfoservice.entity.PatientInfo;
 import com.microservice.personalinfoservice.mapper.AdminInfoMapper;
 import com.microservice.personalinfoservice.service.AdminInfoService;
 import com.microservice.personalinfoservice.service.AuthService;
@@ -70,6 +72,18 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     @Override
     public AdminDto getByName(String username) {
         AdminInfo adminInfo = getAllInfoByName(username);
+
+        if(adminInfo != null) {
+            AdminDto adminDto = new AdminDto();
+            BeanUtil.copyProperties(adminInfo, adminDto);
+            return adminDto;
+        }
+        return null;
+    }
+
+    @Override
+    public AdminDto getById(Integer adminId) {
+        AdminInfo adminInfo = adminInfoMapper.selectById(adminId);
 
         if(adminInfo != null) {
             AdminDto adminDto = new AdminDto();

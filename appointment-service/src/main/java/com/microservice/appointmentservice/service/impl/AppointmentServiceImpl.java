@@ -120,8 +120,14 @@ public class AppointmentServiceImpl implements AppointmentService {
             approvalDto.setUsername(orderInfo.getPatientId());
             //医院管理微服务获取管理员
             CommonResult result = hospitalManageFeignService.getHospitalAdministrator(orderInfo.getHospital());
-            LinkedHashMap data = (LinkedHashMap) result.getData();
-            approvalDto.setAdminUsername((String) data.get("administrator"));
+            HospitalVo data = (HospitalVo) result.getData();
+
+            System.out.println(data.getAdministrator());
+            Integer adminId = data.getAdministrator();
+            result = personalInfoFeignService.getAdminById(adminId);
+            AdminDto adminDto=(AdminDto)result.getData();
+            approvalDto.setAdminUsername(adminDto.getUsername());
+
 //            approvalDto.setAdminUsername("ly");
             approvalDto.setCancelReason("单日多次预约");
             approvalDto.setAuditStatus("预约待审核");
@@ -239,8 +245,13 @@ public class AppointmentServiceImpl implements AppointmentService {
             approvalDto.setUsername(orderInfo.getPatientId());
             //医院管理微服务获取管理员
             CommonResult result = hospitalManageFeignService.getHospitalAdministrator(orderInfo.getHospital());
-            LinkedHashMap data = (LinkedHashMap) result.getData();
-            approvalDto.setAdminUsername((String) data.get("administrator"));
+            HospitalVo data = (HospitalVo) result.getData();
+
+            System.out.println(data.getAdministrator());
+            Integer adminId = data.getAdministrator();
+            result = personalInfoFeignService.getAdminById(adminId);
+            AdminDto adminDto=(AdminDto)result.getData();
+            approvalDto.setAdminUsername(adminDto.getUsername());
 //            approvalDto.setAdminUsername("ly");
             approvalDto.setCancelReason(cancelRequest.getCancelReason());
             approvalDto.setAuditStatus("取消待审核");
@@ -299,8 +310,13 @@ public class AppointmentServiceImpl implements AppointmentService {
         approvalDto.setUsername(appointmentDto.getPatientId());
         //医院管理微服务获取管理员
         CommonResult result = hospitalManageFeignService.getHospitalAdministrator(appointmentDto.getHospital());
-        LinkedHashMap data = (LinkedHashMap) result.getData();
-        approvalDto.setAdminUsername((String) data.get("administrator"));
+        HospitalVo data = (HospitalVo) result.getData();
+
+        System.out.println(data.getAdministrator());
+        Integer adminId = data.getAdministrator();
+        result = personalInfoFeignService.getAdminById(adminId);
+        AdminDto adminDto=(AdminDto)result.getData();
+        approvalDto.setAdminUsername(adminDto.getUsername());
 //            approvalDto.setAdminUsername("ly");
         approvalDto.setCancelReason(cancelRequest.getCancelReason());
         approvalDto.setAuditStatus("取消待审核");

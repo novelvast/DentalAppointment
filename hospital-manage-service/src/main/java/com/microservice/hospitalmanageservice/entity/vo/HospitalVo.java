@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HospitalVo {
-    private String administrator;
+    private Integer administrator;
 }
