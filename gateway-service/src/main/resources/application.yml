@@ -13,6 +13,7 @@ spring:
         server-addr: 47.115.205.56:8848
         username: nacos
         password: microservice
+        ip: 121.43.108.102
     sentinel:
       transport:
         dashboard: 8.130.167.87:8090
@@ -74,7 +75,7 @@ spring:
             - Path=/hospital-manage/**
           filters:
             - StripPrefix=1
-            - PrefixPath=/api/hospital-manage
+            - PrefixPath=/api/hospital
 
 
   security:

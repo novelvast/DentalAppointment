@@ -4,10 +4,7 @@ import com.microservice.common.api.CommonResult;
 import com.microservice.hospitalmanageservice.entity.vo.KpiVo;
 import com.microservice.hospitalmanageservice.service.IKpiService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
@@ -15,6 +12,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/{hospitalId}/kpi")
 public class KpiController {
     @Resource

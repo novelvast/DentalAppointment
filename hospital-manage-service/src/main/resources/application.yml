@@ -11,10 +11,12 @@ spring:
         server-addr: 47.115.205.56:8848
         username: nacos
         password: microservice
+        ip: 118.195.236.254
     sentinel:
       transport:
-        dashboard: localhost:8090
+        dashboard: 118.195.236.254:8090
         port: 8719
+        clientIp: 118.195.236.254
       http-method-specify: true #开启请求方式前缀
       eager: true #饥饿加载
       filter:
@@ -45,7 +47,7 @@ api:
     case:
       byPatientId: ${api.his1.base-url}/cases/{0}
     appointment:
-      byDoctorIdAndDay: ${api.his1.base-url}/appointments/{0}
+      byDoctorIdAndDay: ${api.his1.base-url}/appointments/{0}?date={1}
       deleteById: ${api.his1.base-url}/appointments/{0}
       add: ${api.his1.base-url}/appointments
   his2:
@@ -60,7 +62,7 @@ api:
     case:
       byPatientId: ${api.his2.base-url}/patientCases/patientId/{0}
     appointment:
-      byDoctorIdAndDay: ${api.his2.base-url}/appointments/byDoctor/{0}
+      byDoctorIdAndDay: ${api.his2.base-url}/appointments/byDoctor/{0}?date={1}
       deleteById: ${api.his2.base-url}/appointments/{0}
       add: ${api.his2.base-url}/appointments
   his3:

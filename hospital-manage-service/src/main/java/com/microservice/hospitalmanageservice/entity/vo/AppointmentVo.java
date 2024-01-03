@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AppointmentVo {
     private String appointmentId;
+    private Integer doctorId;
     private String patientId;
     private Integer deptId;
     private LocalDateTime appointmentDateTime;
