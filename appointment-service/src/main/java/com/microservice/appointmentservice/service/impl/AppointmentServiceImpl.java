@@ -307,7 +307,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         AppointmentDto appointmentDto=getAppointmentById(cancelRequest.getOrderId());
         ApprovalDto approvalDto=new ApprovalDto();
         approvalDto.setKind("医生");
-        approvalDto.setUsername(appointmentDto.getPatientId());
+        approvalDto.setUsername(appointmentDto.getDoctorId());
         //医院管理微服务获取管理员
         CommonResult result = hospitalManageFeignService.getHospitalAdministrator(appointmentDto.getHospital());
         HospitalVo data = (HospitalVo) result.getData();
