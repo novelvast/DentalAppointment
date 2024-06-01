@@ -135,6 +135,18 @@ public class DoctorInfoController {
         else {
             return CommonResult.success(doctorDtoList);
         }
+    }
 
+    @ApiOperation("获取某医院某部门的所有医生")
+    @GetMapping("/getByDepartment")
+    public CommonResult getByDepartment(@RequestParam String department,Integer hospitalId){
+        List<DoctorDto> doctorDtoList=doctorInfoService.getByDepartment(hospitalId,department);
+
+        if(doctorDtoList.isEmpty()) {
+            return CommonResult.failed("该医院该部门没有医生数据");
+        }
+        else {
+            return CommonResult.success(doctorDtoList);
+        }
     }
 }

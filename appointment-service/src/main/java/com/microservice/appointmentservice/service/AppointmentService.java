@@ -32,4 +32,6 @@ public interface AppointmentService {
     void addTOManage(AppointmentDto appointmentDto);
 
     void deleteTOManage(AppointmentDto appointmentDto);
+
+    Boolean allocate(Integer orderId);
 }

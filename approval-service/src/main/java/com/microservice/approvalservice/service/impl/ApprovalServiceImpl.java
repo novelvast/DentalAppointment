@@ -127,7 +127,7 @@ public class ApprovalServiceImpl implements ApprovalService {
                 doctorCkInfoMapper.update("审核通过",approvalId);
                 DoctorCkInfo doctorCkInfo=doctorCkInfoMapper.find_message(approvalId);
                 System.out.println(doctorCkInfo.getOrderId());
-                appointmentFeignService.send_orderid(doctorCkInfo.getOrderId());
+                appointmentFeignService.allocate(doctorCkInfo.getOrderId());
 
                 doctor_json_send(doctorCkInfo);
             }

@@ -6,12 +6,12 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 47.115.205.56:8848
+        server-addr: 47.116.162.133:8848
         username: nacos
         password: microservice
-        ip: 121.43.108.102
+        ip: 127.0.0.1
       config:
-        server-addr: 47.115.205.56:8848
+        server-addr: 47.116.162.133:8848
         username: nacos
         password: microservice
         file-extension: yaml

@@ -14,18 +14,27 @@ import com.microservice.appointmentservice.service.AppointmentService;
 import com.microservice.appointmentservice.service.HospitalManageFeignService;
 import com.microservice.appointmentservice.service.PersonalInfoFeignService;
 import com.microservice.common.api.CommonResult;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 //todo:几个次数写到配置文件里热更新
@@ -344,5 +353,74 @@ public class AppointmentServiceImpl implements AppointmentService {
         updateWrapper.set("approval_status", status);
 
         orderInfoMapper.update(null,updateWrapper);
+    }
+
+    //医生取消时新分配医生
+    public Boolean allocate(Integer orderId){
+        //TODO:1.错误处理，2.接入外部医院数据库
+        //保存分配前订单数据
+        AppointmentDto preAppointment= getAppointmentById(orderId);
+        //寻找空闲医生
+        List<DoctorDto> doctorDtoList=searchFreeDoctor(preAppointment.getHospital(),preAppointment.getOrderDepartment(),preAppointment.getDoctorId());
+        int best=aiAllocate(doctorDtoList);
+        DoctorDto bestDoctor=doctorDtoList.get(best);
+        OrderInfo newOrder=new OrderInfo();
+        newOrder.setDoctorId(bestDoctor.getUsername());
+        newOrder.setPatientId(preAppointment.getPatientId());
+        newOrder.setOrderTime(preAppointment.getOrderTime());
+        newOrder.setClinicTime(preAppointment.getClinicTime());
+        newOrder.setOrderDepartment(preAppointment.getOrderDepartment());
+        newOrder.setDiseaseDescription(preAppointment.getDiseaseDescription());
+        newOrder.setHospital(preAppointment.getHospital());
+        newOrder.setApprovalStatus("重新分配医生");
+        //删除原本的
+        deleteAppointmentById(orderId);
+        //插入新加的
+        orderInfoMapper.insert(newOrder);
+        return true;
+    }
+
+    public List<DoctorDto> searchFreeDoctor(String hospital,String department,String doctorId){
+        Integer hospitalId;
+        try {
+            hospitalId = Integer.valueOf(hospital);
+        } catch (NumberFormatException e) {
+            // 处理转换异常，例如记录日志或抛出异常
+            System.out.println("Invalid hospital ID format: " + hospital);
+            return null;
+        }
+        // 调用 personalInfoFeignService 的 getByDepartment 方法
+        CommonResult response= personalInfoFeignService.getByDepartment(department, hospitalId);
+        List<DoctorDto> doctorDtoList=(List<DoctorDto>)response.getData();
+        List<DoctorDto> res=new ArrayList<>();
+        for (DoctorDto doctorDto : doctorDtoList) {
+            String doctorUserName=doctorDto.getUsername();
+            if(!doctorUserName.equals(doctorId)){
+                res.add(doctorDto);
+            }
+        }
+        return res;
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
+    public Integer aiAllocate(List<DoctorDto> doctorDtoList){
+        // Python后端接口的URL
+        String pythonEndpointUrl = "http://localhost:5000";
+        // 创建一个RestTemplate实例
+        RestTemplate restTemplate = new RestTemplate();
+        // 准备请求参数
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        // 设置请求体参数
+        String requestBody ="{\"doctorDtoList\":\""+doctorDtoList+"\"}";
+        // 创建HttpEntity对象
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+        // 发送POST请求到后端接口，并获取响应
+        String response = restTemplate.postForObject(pythonEndpointUrl, requestEntity, String.class);
+        return Integer.parseInt(response);
     }
 }

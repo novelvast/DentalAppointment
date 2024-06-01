@@ -1,4 +1,4 @@
-package com.microservice.personalinfoservice.dto;
+package com.microservice.appointmentservice.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

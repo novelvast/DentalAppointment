@@ -64,5 +64,10 @@ public interface DoctorInfoService {
     String getEmailByName(String username);
 
     List<DoctorDto> getByHospital(Integer hospitalId);
+
+    /**
+     * 获取某医院某部门所有医生
+     */
+    List<DoctorDto> getByDepartment(Integer hospitalId, String department);
 }
 

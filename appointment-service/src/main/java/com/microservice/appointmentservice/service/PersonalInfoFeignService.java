@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name="personal-info-service",path="/api")
 public interface PersonalInfoFeignService {
@@ -18,4 +19,7 @@ public interface PersonalInfoFeignService {
     @GetMapping("/admin/id/{adminId}")
     CommonResult<AdminDto> getAdminById(@PathVariable Integer adminId);
 
+    @ApiOperation("获取某医院某部门的所有医生")
+    @GetMapping("/getByDepartment")
+    CommonResult getByDepartment(@RequestParam String department, Integer hospitalId);
 }

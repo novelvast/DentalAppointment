@@ -187,4 +187,24 @@ public class DoctorInfoServiceImpl implements DoctorInfoService {
 
         return doctorDtoList;
     }
+
+    @Override
+    public  List<DoctorDto> getByDepartment(Integer hospitalId, String department) {
+        QueryWrapper<DoctorInfo> doctorInfoQueryWrapper = new QueryWrapper<>();
+
+        doctorInfoQueryWrapper.eq("hospital_id", hospitalId);
+
+        doctorInfoQueryWrapper.eq("department", department);
+
+        List<DoctorInfo> doctorList = doctorInfoMapper.selectList(doctorInfoQueryWrapper);
+        List<DoctorDto> doctorDtoList = new ArrayList<>();
+
+        for (DoctorInfo doctorInfo : doctorList) {
+            DoctorDto doctorDto = new DoctorDto();
+            BeanUtil.copyProperties(doctorInfo, doctorDto);
+            doctorDtoList.add(doctorDto);
+        }
+
+        return doctorDtoList;
+    }
 }

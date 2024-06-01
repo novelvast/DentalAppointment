@@ -92,4 +92,16 @@ public class AppointmentController {
             return CommonResult.failed("Doctor failed to cancel an appointment successfully");
         }
     }
+
+    // 医生取消预约后重新分配
+    @ApiOperation("医生取消预约后重新分配")
+    @PostMapping("/allocate")
+    @CrossOrigin(origins = "*")
+    public CommonResult allocate(@RequestBody Integer orderId){
+        if(appointmentService.allocate(orderId)){
+            return CommonResult.success(null,"Allocated appointment");
+        }else{
+            return CommonResult.failed("failed to allocate an appointment");
+        }
+    }
 }

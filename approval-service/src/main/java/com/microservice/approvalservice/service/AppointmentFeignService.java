@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name="appointment-service",path="/api/appointment")
 public interface AppointmentFeignService {
-    @PostMapping("/?")
-    String send_orderid(@RequestParam Integer orderid);
+    @PostMapping("/allocate")
+    String allocate(@RequestParam Integer orderid);
 }
