@@ -11,6 +11,7 @@ import com.microservice.approvalservice.entity.RabbitResult;
 import com.microservice.approvalservice.list_to_json;
 import com.microservice.approvalservice.mapper.DoctorCkInfoMapper;
 import com.microservice.approvalservice.mapper.PatientCkInfoMapper;
+import com.microservice.approvalservice.service.AppointmentFeignService;
 import com.microservice.approvalservice.service.ApprovalMQService;
 import com.microservice.approvalservice.service.ApprovalService;
 import com.microservice.common.api.CommonResult;
@@ -31,6 +32,8 @@ public class ApprovalServiceImpl implements ApprovalService {
     FeignServiceImpl mess;
     @Autowired
     ApprovalMQService approvalMQService;
+    @Autowired
+    AppointmentFeignService appointmentFeignService;
 
     @Override
     public Boolean patient_put(String patientUsername,Integer orderId,String adminUsername,String cancelReason,String auditStatus){
@@ -123,6 +126,9 @@ public class ApprovalServiceImpl implements ApprovalService {
             else if(Objects.equals(kind, "医生")){
                 doctorCkInfoMapper.update("审核通过",approvalId);
                 DoctorCkInfo doctorCkInfo=doctorCkInfoMapper.find_message(approvalId);
+                System.out.println(doctorCkInfo.getOrderId());
+                appointmentFeignService.send_orderid(doctorCkInfo.getOrderId());
+
                 doctor_json_send(doctorCkInfo);
             }
 
