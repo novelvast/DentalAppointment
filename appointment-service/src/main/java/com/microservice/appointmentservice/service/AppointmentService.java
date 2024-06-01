@@ -14,6 +14,7 @@ import java.util.List;
 
 public interface AppointmentService {
     List<AppointmentDto> getAppointmentByPatientId(String patientId);
+
     Integer book(@RequestBody BookRequest bookRequest);
 
     List<AppointmentDto> getAppointmentByDoctorId(String doctorId);
@@ -23,7 +24,9 @@ public interface AppointmentService {
     Boolean doctorCancel(CancelRequest cancelRequest);
 
     AppointmentDto getAppointmentById(Integer id);
+
     void changeApprovalStatus(Integer orderId,String status);
+
     Integer deleteAppointmentById(Integer id);
 
     void addTOManage(AppointmentDto appointmentDto);

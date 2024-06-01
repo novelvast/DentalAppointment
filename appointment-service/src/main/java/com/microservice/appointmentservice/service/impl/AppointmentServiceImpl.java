@@ -46,6 +46,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Autowired
     private HospitalManageFeignService hospitalManageFeignService;
+
     public AppointmentDto getAppointmentById(Integer id){
         OrderInfo orderInfo=orderInfoMapper.selectById(id);
         AppointmentDto dto = new AppointmentDto();

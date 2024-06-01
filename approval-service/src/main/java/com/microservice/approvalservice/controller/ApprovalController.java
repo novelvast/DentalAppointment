@@ -61,6 +61,7 @@ public class ApprovalController {
     public CommonResult patient_get(@RequestParam String adminUsername){
         return approvalService.patient_get(adminUsername);
     }
+
     @ApiOperation("获得某管理员的医生审核信息")
     @GetMapping("/doctor")
     public CommonResult doctor_get(@RequestParam String adminUsername){

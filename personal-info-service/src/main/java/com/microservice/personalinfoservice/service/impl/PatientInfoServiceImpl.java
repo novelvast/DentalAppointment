@@ -20,7 +20,7 @@ import java.util.Map;
 
 @Service
 public class PatientInfoServiceImpl implements PatientInfoService {
-
+    int getAccountStatus(String username)=1;
     @Autowired
     private PatientInfoMapper patientInfoMapper;
 
@@ -69,7 +69,18 @@ public class PatientInfoServiceImpl implements PatientInfoService {
         params.put("grant_type","password");
         params.put("username",username);
         params.put("password",password);
-        return CommonResult.success(authService.getAccessToken(params));
+        int status=getAccountStatus(username);
+        switch (status) {
+            case 0:
+                return CommonResult.success("正常登录");
+            case 1:
+                return CommonResult.success("首次登录");
+            case 2:
+                return CommonResult.failed("用户被封禁");
+            default:
+                return CommonResult.failed("服务异常。该事件已在后台登记，对此我们感到十分抱歉。");
+        }
+
     }
 
     @Override
